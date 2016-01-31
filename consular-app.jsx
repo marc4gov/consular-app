@@ -3,6 +3,6 @@ if (Meteor.isClient) {
  
   Meteor.startup(function () {
     // Use Meteor.startup to render the component after the page is ready
-    ReactLayout.render(App)
+    //ReactLayout.render(App)
   });
 }

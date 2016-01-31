@@ -1,4 +1,4 @@
-/*
+
 Accounts.emailTemplates.siteName = "PoC DCV";
 Accounts.emailTemplates.from = "PoC DCV <support@pocdcv.nl>";
 Accounts.emailTemplates.resetPassword.subject = function (user) {
@@ -17,4 +17,3 @@ Accounts.emailTemplates.resetPassword.text = function (user, url) {
         "Cheers,\n" +
         signature;
 };
-*/

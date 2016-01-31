@@ -1,14 +1,5 @@
 // if the database is empty on server start, create some sample data.
 Meteor.startup(function () {
-  // Add Google configuration entry
-  ServiceConfiguration.configurations.update(
-    { service: "google" },
-    { $set: {
-        clientId: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        client_email: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        secret: "XXXXXXXXXXXXXXXXXXXXXXXX"
-      }
-    },
-    { upsert: true }
-  );
+    //ReactLayout.render(MainLayout, { nav: "Header", main: "Marc", footer: "Footer"});
+    //process.env.MAIL_URL = 'smtp://marc.minnee%40google.com:lucas0304%40smtp.gmail.com:465';
 });

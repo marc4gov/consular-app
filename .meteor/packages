@@ -22,6 +22,11 @@ kadira:react-layout
 accounts-password
 qnub:accounts-react-material-ui
 izzilab:material-ui
+kadira:blaze-layout
+gwendall:blaze-to-react
+kadira:flow-router
 useraccounts:materialize
 useraccounts:flow-routing
-accounts-google
+materialize:materialize
+service-configuration
+accounts-ui
