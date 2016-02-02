@@ -1,12 +1,24 @@
-FlowRouter.route('/', {  
+FlowRouter.route('/izzy', {  
   action() {
-    ReactLayout.render(MainLayout, { nav: "Header", main: "Marc Minnee", footer: "Footer"});
+    ReactLayout.render(VisaCard);
+  }
+});
+
+FlowRouter.route('/gridlist', {  
+  action() {
+    ReactLayout.render(GridListSimple);
   }
 });
 
 FlowRouter.route('/home', {  
   action() {
     ReactLayout.render(MainLayout, { nav: "Home", main: <Loading />, footer: "Footer"});
+  }
+});
+
+FlowRouter.route('/schengenvisa', {  
+  action() {
+    ReactLayout.render(VisaCard, { name: "Schengen Visa", img: "schengenvisa"});
   }
 });
 
