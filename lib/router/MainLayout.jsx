@@ -3,13 +3,13 @@ MainLayout = React.createClass({
     return (
       <div>
         <header>
-          {this.props.nav || <Nav />}
+          {this.props.nav}
         </header>
         <main>
           {this.props.main}
         </main>
         <footer>
-          {this.props.footer || <Footer />}
+          {this.props.footer}
         </footer>
       </div>
     );

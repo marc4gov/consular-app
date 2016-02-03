@@ -30,3 +30,10 @@ useraccounts:flow-routing
 materialize:materialize
 service-configuration
 accounts-ui
+http
+meteorhacks:npm
+
+
+
+
+npm-container

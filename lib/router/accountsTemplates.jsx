@@ -2,10 +2,6 @@ AccountsTemplates.configure({
   defaultLayoutType: 'blaze-to-react',
   defaultTemplate: 'fullPageAtForm',  // default
   defaultLayout: MainLayout,
-  defaultLayoutRegions: {
-    nav: <Nav />,
-    footer: <Footer />
-  },
   defaultContentRegion: 'main',
     // Behavior
     confirmPassword: true,

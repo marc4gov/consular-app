@@ -12,7 +12,7 @@ FlowRouter.route('/gridlist', {
 
 FlowRouter.route('/home', {  
   action() {
-    ReactLayout.render(MainLayout, { nav: "Home", main: <Loading />, footer: "Footer"});
+    ReactLayout.render(App);
   }
 });
 
@@ -29,3 +29,11 @@ FlowRouter.route('/logout', {
   }
 });
 
+FlowRouter.route('/pay', {  
+  action() {
+
+        ReactLayout.render(Welcome);
+        
+               
+  }
+});
