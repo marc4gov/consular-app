@@ -18,7 +18,7 @@ FlowRouter.route('/home', {
 
 FlowRouter.route('/schengenvisa', {  
   action() {
-    ReactLayout.render(VisaCard, { name: "Schengen Visa", img: "schengenvisa"});
+    ReactLayout.render(NewApplication, { name: "Schengen Visa", img: "schengenvisa"});
   }
 });
 

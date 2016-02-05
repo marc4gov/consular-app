@@ -39,9 +39,9 @@ VisaCard = React.createClass({
   },
   getComponent: function(name) {
     console.log(name);
-        //FlowRouter.go('/'+ tile.link)
-      },
-      render: function () {
+    FlowRouter.go('/'+ tile.link)
+  },
+  render: function () {
         //let VIcon = <SvgIcons.MoreVertIcon />
         let imglocation = "/images/" + this.props.img + ".jpeg"
         //let idp = Session.get("id");
