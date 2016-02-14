@@ -17,13 +17,11 @@ var {
   IconMenu,
   MoreVertIcon,
   MenuItem,
+  SvgIcons,
   ActionAndroid,
   DatePicker
 } = MUI;
 
-var {
-  SvgIcons,
-} = MUI.Libs;
 
 var { ThemeManager, LightRawTheme } = Styles;
 

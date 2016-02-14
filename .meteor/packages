@@ -21,7 +21,6 @@ react
 kadira:react-layout
 accounts-password
 qnub:accounts-react-material-ui
-izzilab:material-ui
 kadira:blaze-layout
 gwendall:blaze-to-react
 kadira:flow-router
@@ -37,3 +36,7 @@ meteorhacks:npm
 
 
 npm-container
+getstream:stream-meteor
+chrismbeckett:toastr
+cosmos:browserify
+izzilab:material-ui

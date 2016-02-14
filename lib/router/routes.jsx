@@ -10,14 +10,21 @@ FlowRouter.route('/gridlist', {
   }
 });
 
+FlowRouter.route('/newapp', {  
+  action() {
+    ReactLayout.render(NewApplication);
+  }
+});
+
 FlowRouter.route('/home', {  
   action() {
-    ReactLayout.render(App);
+    ReactLayout.render(GridListSimple);
   }
 });
 
 FlowRouter.route('/schengenvisa', {  
   action() {
+    
     ReactLayout.render(NewApplication, { name: "Schengen Visa", img: "schengenvisa"});
   }
 });
@@ -31,9 +38,23 @@ FlowRouter.route('/logout', {
 
 FlowRouter.route('/pay', {  
   action() {
+        ReactLayout.render(Welcome);           
+  }
+});
 
-        ReactLayout.render(Welcome);
-        
-               
+FlowRouter.route('/paymentform', {  
+  action: function(queryParams) {
+    //console.log("Query Params:", queryParams.checkoutId);
+    ReactLayout.render(Pay, queryParams);
+  }
+});
+
+FlowRouter.route('/paymentsuccess', {  
+  action: function() {
+    Session.set('resourcePath', FlowRouter.current().queryParams.resourcePath);
+    //console.log(current);
+    console.log("Query Params:", Session.get('resourcePath'));
+    //var resourcePath = Session.get('resourcePath');
+    ReactLayout.render(PaymentSuccess, {resourcePath : Session.get('resourcePath')});
   }
 });

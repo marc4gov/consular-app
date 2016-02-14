@@ -4,10 +4,22 @@ Meteor.publish('applications', function(appId) {
 });
 
 var querystring = Meteor.npmRequire('querystring');
+var Future = Meteor.npmRequire("fibers/future");
 //var request = Meteor.npmRequire('request');
 //var http = Meteor.npmRequire('http');
 
-function reqPay(callback) {
+
+Meteor.methods({
+  '/applications/delete': function (appId) {
+    Applications.remove(appId);
+
+  },
+  '/applications/setStatus': function (appId, statusUpdate) {
+    Applications.update(appId, {$set: {status: statusUpdate}});
+  },
+  
+  'requestPay': function () {
+  	var f = new Future();
 	var path='/v1/checkouts';
 	var data = querystring.stringify( {
 		'authentication.userId' : '8a8294174b7ecb28014b9699220015cc',
@@ -34,41 +46,56 @@ function reqPay(callback) {
   		if (!error) {
   			//jsonRes = JSON.parse(result);
 			//return callback(JSON.parse(result));
-  			return callback(result);
+  			return f.return(result);
   		} else {
 
-  			return callback(error);
+  			return f.throw(error);
   		}
-	});	
-/*
-	var postRequest = http.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function (chunk) {
-			//console.log(chunk);
-			jsonRes = JSON.parse(chunk);
-			return callback(jsonRes);
-		});
 	});
-	postRequest.write(data);
-	postRequest.end();
-	*/
-}
+	return f.wait();
 
-Meteor.methods({
-  '/applications/delete': function (appId) {
-    Applications.remove(appId);
+	},
 
-  },
-  '/applications/setStatus': function (appId, statusUpdate) {
-    Applications.update(appId, {$set: {status: statusUpdate}});
-  },
-  
-  'requestPay': function () {
-		reqPay(function(responseData) {
-			var jsonRes = JSON.parse(responseData.content); 
-			console.log(jsonRes['id']);
-			return jsonRes['id'];
+	'requestPaymentStatus': function (resourcePath) {
+	  	var f = new Future();
+	  	console.log("resourcePath", resourcePath);
+		//var path='/v1/checkouts';
+		var data = querystring.stringify( {
+			'authentication.userId' : '8a8294174b7ecb28014b9699220015cc',
+			'authentication.password' : 'sy6KJsT8',
+			'authentication.entityId' : '8a8294174b7ecb28014b9699220015ca'
 		});
-	}
+		var options = {
+			port: 443,
+			host: 'test.oppwa.com',
+			path: resourcePath,
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Length': data.length
+			}
+		};
+
+		HTTP.call("GET", "https://test.oppwa.com/", {
+			options: options,
+			query: data,
+		}, function(error, result) {
+	  		if (!error) {
+	  			//jsonRes = JSON.parse(result);
+				//return callback(JSON.parse(result));
+	  			return f.return(result);
+	  		} else {
+
+	  			return f.throw(error);
+	  		}
+		});
+		return f.wait();
+	},
+
+        'userFeedToken': function() {
+
+            return Stream.feedManager.getUserFeedToken('1');
+        }
+    
   
 });

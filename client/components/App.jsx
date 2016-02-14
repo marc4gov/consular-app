@@ -17,13 +17,9 @@ var {
     IconMenu,
     MoreVertIcon,
     MenuItem,
+    SvgIcons,
     DatePicker
 } = MUI;
-
-var {
-    SvgIcons,
-    
-} = MUI.Libs;
 
 var { ThemeManager, LightRawTheme } = Styles;
 
