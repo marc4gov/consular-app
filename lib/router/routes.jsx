@@ -4,11 +4,6 @@ FlowRouter.route('/izzy', {
   }
 });
 
-FlowRouter.route('/gridlist', {  
-  action() {
-    ReactLayout.render(GridListSimple);
-  }
-});
 
 FlowRouter.route('/newapp', {  
   action() {
@@ -16,40 +11,75 @@ FlowRouter.route('/newapp', {
   }
 });
 
-FlowRouter.route('/home', {  
+FlowRouter.route('/photodetect', {  
   action() {
-    ReactLayout.render(GridListSimple);
+    ReactLayout.render(PhotoDetect);
   }
 });
 
-FlowRouter.route('/schengenvisa', {  
+FlowRouter.route('/home', {  
   action() {
-    
-    ReactLayout.render(NewApplication, { name: "Schengen Visa", img: "schengenvisa"});
+      ReactLayout.render(MainLayout, { 
+          main: <GridListSimple/>
+      });
+  }
+});
+
+FlowRouter.route('/', {  
+  action() {
+      ReactLayout.render(MainLayout, { 
+          main: <HomeCard name='schengenvisa' />
+      });
+  }
+});
+
+FlowRouter.route('/schengenvisa', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  action() {
+      ReactLayout.render(MainLayout, { 
+          main: <NewApplication 
+                  name="Schengen Visa"
+                  img="schengenvisa"
+                 />
+      });
   }
 });
 
 FlowRouter.route('/logout', {  
   action() {
     AccountsTemplates.logout();
-    //ReactLayout.render(MainLayout, { nav: "Home", main: "Logout called", footer: "Footer"});
   }
 });
 
-FlowRouter.route('/pay', {  
+
+FlowRouter.route('/applications', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
-        ReactLayout.render(Welcome);           
+      ReactLayout.render(MainLayout, { 
+          main: <ApplicationList />
+      });
   }
 });
 
-FlowRouter.route('/paymentform', {  
+FlowRouter.route('/pay', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn], 
+  action() {
+      ReactLayout.render(MainLayout, { 
+          main: <Welcome />
+      });
+  }
+});
+
+FlowRouter.route('/paymentform', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn], 
   action: function(queryParams) {
     //console.log("Query Params:", queryParams.checkoutId);
     ReactLayout.render(Pay, queryParams);
   }
 });
 
-FlowRouter.route('/paymentsuccess', {  
+FlowRouter.route('/paymentsuccess', {
+  triggersEnter: [AccountsTemplates.ensureSignedIn],  
   action: function() {
     Session.set('resourcePath', FlowRouter.current().queryParams.resourcePath);
     //console.log(current);

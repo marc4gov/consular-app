@@ -1,0 +1,7 @@
+[
+	{"origin": ["http://localhost:3000"],
+ "responseHeader": ["Origin", "Accept", "X-Requested-With", "Authorization", "Content-Type", "Content-Length", "Accept-Encoding", "X-CSRF-Token"], 
+ "method": ["GET", "HEAD", "DELETE", "PUT", "POST", "HEAD"], 
+ "maxAgeSeconds": 3600
+ }
+]

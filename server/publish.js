@@ -1,6 +1,12 @@
-Meteor.publish('applications', function(appId) {
-  check(appId, String);
-  return Applications.find({appId: appId});
+Meteor.publish('applications', function() {
+  //check(appId, String);
+  return Applications.find();
+});
+
+Meteor.publish('images', function(){ return Images.find(); });
+
+Meteor.publish('imagesById', function(imageId) {
+  return Images.find({_id: imageId});
 });
 
 var querystring = Meteor.npmRequire('querystring');
@@ -17,7 +23,44 @@ Meteor.methods({
   '/applications/setStatus': function (appId, statusUpdate) {
     Applications.update(appId, {$set: {status: statusUpdate}});
   },
-  
+
+  "userExists": function(username){
+          return !!Meteor.users.findOne({username: username});
+  },
+
+'requestPhotoDetect': function (imageB64) {
+  	var f = new Future();
+  	var image1 = imageB64.replace("data:image/png;base64,", "");
+	var options = {
+		data: {
+			"image": image1,
+			"gallery_name": "PoCDCV",
+			"threshold": 0.7
+		},
+		headers: {
+			'Content-Type': 'application/json',
+			'app_id': 'ad5b6690',
+			'app_key': '005afee0fd7c340746266225be909bcb', 
+		}
+	};
+	//console.log("Options:", options);
+
+	HTTP.call("POST", "https://api.kairos.com/recognize", options, 
+		function(error, result) {
+  		if (!error) {
+  			//jsonRes = JSON.parse(result);
+			//return callback(JSON.parse(result));
+  			return f.return(result);
+  		} else {
+
+  			return f.throw(error);
+  		}
+	});
+	return f.wait();
+
+	},  
+
+
   'requestPay': function () {
   	var f = new Future();
 	var path='/v1/checkouts';

@@ -12,10 +12,13 @@ var {
     CardMedia,
     CardTitle,
     CardText,
-        SvgIcons,
     FlatButton,
     IconButton,
 } = MUI;
+
+const {
+  SvgIcons
+} = MUI.Libs
 
 var { ThemeManager, LightRawTheme } = Styles;
 

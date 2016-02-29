@@ -17,11 +17,13 @@ var {
   IconMenu,
   MoreVertIcon,
   MenuItem,
-  SvgIcons,
   ActionAndroid,
   DatePicker
 } = MUI;
 
+const {
+  SvgIcons
+} = MUI.Libs
 
 var { ThemeManager, LightRawTheme } = Styles;
 
@@ -71,15 +73,6 @@ VisaCard = React.createClass({
         </CardActions>
         </Card>
 
-      <div style={{padding: '80px',}}>
-      <RaisedButton primary={true} label="Tap"/>
-      <br/>
-      <DatePicker hintText="Portrait Dialog"/>
-      <br/>
-      <DatePicker
-      hintText="Landscape Dialog"
-      mode="landscape"/>
-      </div>
       </AppCanvas>
       );
 }

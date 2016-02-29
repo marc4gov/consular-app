@@ -17,9 +17,12 @@ var {
     StarBorder,
     MenuItem,
     ActionAndroid,
-    SvgIcons,
     DatePicker
     } = MUI;
+
+const {
+  SvgIcons
+} = MUI.Libs
 
 var { ThemeManager, LightRawTheme } = Styles;
 
@@ -82,7 +85,6 @@ GridListSimple = React.createClass({
         return (
             <AppCanvas>
             
-  <div style={styles.root}>
     <GridList
       cellHeight={200}
       style={styles.gridList}
@@ -91,24 +93,14 @@ GridListSimple = React.createClass({
         <GridTile
           key={tile.img}
           title={tile.title}
-          
           onClick={this.getComponent.bind(this, tile)}
         >
           <img src={tile.img} />
         </GridTile>
       ))}
     </GridList>
-  </div>
-                <div style={{padding: '80px',}}>
-                    <RaisedButton primary={true} label="Tap"/>
-                    <br/>
-                    <DatePicker hintText="Portrait Dialog"/>
-                    <br/>
-                    <DatePicker
-                        hintText="Landscape Dialog"
-                        mode="landscape"/>
-                </div>
-            </AppCanvas>
+
+      </AppCanvas>
         );
     }
 });

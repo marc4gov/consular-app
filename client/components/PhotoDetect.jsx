@@ -19,8 +19,15 @@ const {
 
 var { ThemeManager, LightRawTheme } = Styles;
 
-Welcome = React.createClass({
+PhotoDetect = React.createClass({
 
+  getInitialState: function () {
+    Meteor.subscribe("images");
+    //Meteor.subscribe("applications");
+    return {
+      user: Meteor.user(),
+    };
+  },
 /*
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -58,36 +65,42 @@ Welcome = React.createClass({
 
   },
   */
-    getComponent: function(shopperResultUrl) {
-        console.log("CheckoutId:", Session.get("checkoutId"));
-        FlowRouter.go('/paymentform?checkoutId=' + Session.get("checkoutId")
-                      + '&shopperResultUrl=/' + shopperResultUrl
-                      );
+    hitPhoto: function() {
+        this.convertImgToBase64(this.state.user.profile.photo, function(base64Img){
+          console.log('IMAGE:',base64Img);
+          Meteor.call('requestPhotoDetect', base64Img, function(err, result) {
+            console.log("result Detect: ", result);
+          }); 
+        });
+   
     },
 
-    hitPay: function() {
-        Meteor.call('requestPay', function(err, result) {
-          console.log("checkoutId: ", result.data.id);
-          Session.set("checkoutId", result.data.id);
-          console.log("Session checkoutId: ", Session.get("checkoutId"));
-          //this.props.checkoutId = result.data.id;
-        });    
-    },
-
+convertImgToBase64: function(url, callback, outputFormat){
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = function(){
+        var canvas = document.createElement('CANVAS');
+        var ctx = canvas.getContext('2d');
+        canvas.height = this.height;
+        canvas.width = this.width;
+        ctx.drawImage(this,0,0);
+        var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+        callback(dataURL);
+        canvas = null; 
+    };
+    img.src = url;
+},
 
 
   render: function () {
 
       return (
       <AppCanvas>
-      <Card>
-        <CardActions>
-          <FlatButton label="Get Payment Checkout ID" 
-                      onClick={this.hitPay} />
-          <FlatButton label="Get Payment Form" 
-                      onClick={this.getComponent.bind(this, "home")} />
-        </CardActions>  
-      </Card>
+        <img src={this.state.user.profile.photo}/>
+        <FlatButton
+            label="Photo Detect"
+            onClick={this.hitPhoto}/>
+
       </AppCanvas>
       );
   }
