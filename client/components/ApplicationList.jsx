@@ -49,20 +49,34 @@ ApplicationList = React.createClass({
           results: this.data.applications
         })
     },
-    //what page is currently viewed
-    setPage: function(index){
+    getAge: function(dateString) {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+      {
+        age--;
+      }
+      return age;
     },
-    //this will handle how the data is sorted
-    sortData: function(sort, sortAscending, data){
-    },
-    //this changes whether data is sorted in ascending or descending order
-    changeSort: function(sort, sortAscending){
-    },
-    //this method handles the filtering of the data
-    setFilter: function(filter){
-    },
-    //this method handles determining the page size
-    setPageSize: function(size){
+
+    submitApp: function(){
+      var contact = new Object();
+      contact.fullName = this.data.currentUser.profile.firstName + " " + this.data.currentUser.profile.surName;
+      contact.country = this.data.currentUser.profile.country;
+      contact.nationality = this.data.currentUser.profile.nationality;
+      contact.birthDate = this.data.currentUser.profile.birthDate;
+      contact.passportNumber = this.data.currentUser.profile.passportNumber;
+      contact.travelPurpose = this.data.application.travelPurpose;    
+      contact.costOfStay = this.data.application.costOfStay;
+      contact.gender = this.data.application.gender;
+      contact.userId = this.data.currentUser._id;
+      contact.appId = this.data.application
+      contact.age = this.getAge(this.data.currentUser.profile.birthDate);
+
+      Meteor.call("fetchFromService", contact);
+      toastr.success(contact.fullName, "Application submitted");
     },
     getComponent: function(){
         console.log("go Pay");
@@ -88,7 +102,8 @@ ApplicationList = React.createClass({
 
         <CardActions>
             <FlatButton label="Pay" primary={true} onClick={this.getComponent}  />
-        </CardActions>
+             <FlatButton label="Submit" onClick={this.submitApp}  />
+       </CardActions>
         </Card>
 
       </AppCanvas>

@@ -1,5 +1,5 @@
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 var {
   AppCanvas,

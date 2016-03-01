@@ -135,10 +135,41 @@ Meteor.methods({
 		return f.wait();
 	},
 
-        'userFeedToken': function() {
+    fetchFromService: function(appdata) {
 
-            return Stream.feedManager.getUserFeedToken('1');
-        }
+      var url = "http://localhost:8080/engine-rest/process-definition/key/behandelenAlsCase/submit-form";
+      //synchronous 
+      var options = {
+        headers: {'Content-Type': 'application/json'},
+        data: {
+        		"variables" :
+                {
+					"fullName" : {"value" : appdata.fullName, "type": "String"},
+ 					"birthDate" : {"value" : appdata.birthDate, "type": "Date"},
+					"nationality" : {"value" : appdata.nationality, "type": "String"},
+					"country" : {"value" : appdata.country, "type": "String"},
+					"passportNumber": {"value" : appdata.passportNumber, "type": "Long"},
+					"travelPurpose": {"value" : appdata.travelPurpose, "type": "String"},
+					"age": {"value" : appdata.age, "type": "Long"},
+					"status": {"value": "Open", "type":"String"},
+					 "bevoegd" : {"value" : true, "type": "Boolean"}
+ 				},
+ 				"businessKey" : appdata.appId
+        	}
+      };
+
+      var result = HTTP.post(url, options);
+      
+      if(result.statusCode==200) {
+        var respJson = JSON.parse(result.content);
+        console.log("Response received.");
+        return respJson;
+      } else {
+        console.log("Response issue: ", result.statusCode);
+        var errorJson = JSON.parse(result.content);
+        throw new Meteor.Error(result.statusCode, errorJson.error);
+      }
+    }
     
   
 });

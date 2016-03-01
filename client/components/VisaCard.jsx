@@ -1,6 +1,4 @@
 
-injectTapEventPlugin();
-
 var {
   AppCanvas,
   AppBar,

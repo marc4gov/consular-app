@@ -32,7 +32,6 @@ accounts-ui
 http
 meteorhacks:npm
 npm-container
-getstream:stream-meteor
 chrismbeckett:toastr
 izzilab:material-ui
 cosmos:browserify
