@@ -1,13 +1,16 @@
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 const {
     AppCanvas,
     Card,
     CardHeader,
     RadioButton,
-    RaisedButton,
+    FlatButton,
+<<<<<<< HEAD
     RadioButtonGroup,
+=======
+>>>>>>> origin/master
     MenuItem,
     List,
     ListItem,
@@ -85,6 +88,7 @@ NewApplication = React.createClass({
   },
   getFormData: function() {
     var data = {
+      passportNumber: this.refs.passportNumber.getValue(),
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
       costOfStay: this.state.costOfStay,
@@ -96,6 +100,7 @@ NewApplication = React.createClass({
       var data = this.getFormData();
       console.log("Data", data);
       Applications.insert({
+        passportNumber: data.passportNumber,
         dateOfBirth: data.dateOfBirth,
         gender: data.gender,
         costOfStay: data.costOfStay,
@@ -103,7 +108,6 @@ NewApplication = React.createClass({
         status: "Open",
         createdAt: new Date(),            // current time
         applicant: Meteor.userId(),           // _id of logged in user
-        username: Meteor.user().username,  // username of logged in user
         createdAt: new Date() // current time
       });
       FlowRouter.go('/applications')
@@ -119,53 +123,51 @@ NewApplication = React.createClass({
     }
 
     return (
-        <AppCanvas>
+      <AppCanvas>
 
-            <Card>
-            <CardHeader
-            title="New Application"
-            subtitle="Visa"
-            avatar={this.state.myself.profile.photo}
-            />
-            </Card>
+        <Card>
+        <CardHeader
+          title="New Application"
+          subtitle="Visa"
+          avatar={this.state.myself.profile.photo}
+        />
+        </Card>
 
-  <Paper zDepth={2}>
-          <DatePicker 
-            ref="dateOfBirth"
-            floatingLabelText="Date of Birth"
-            hintText="What is your date of birth?"
-            style={style}
-            underlineShow={false} 
-            container="inline" mode="landscape"/>
-        <Divider />
+        <TextField
+          ref="passportNumber"
+          floatingLabelText="Passport Number"
+          style={style}
+          value="1234ABC56" />
+        <DatePicker 
+          ref="dateOfBirth"
+          floatingLabelText="Date of Birth"
+          style={style}
+          container="inline" mode="landscape"/>
         <SelectField
-            ref="gender"
-            floatingLabelText="Gender"
-            style={style}
-            value={this.state.gender} onChange={this.handleGenderChange}>
-          <MenuItem value={"Male"} primaryText="Male"/>
-          <MenuItem value={"Female"} primaryText="Female"/>
+          ref="gender"
+          floatingLabelText="Gender"
+          style={style}
+          value={this.state.gender} onChange={this.handleGenderChange}>
+            <MenuItem value={"Male"} primaryText="Male"/>
+            <MenuItem value={"Female"} primaryText="Female"/>
         </SelectField>
-        <Divider />
         <SelectField
-            ref="travelPurpose"
-            floatingLabelText="Travel Purpose"
-                        style={style}
-            value={this.state.travelPurpose} onChange={this.handleTravelPurposeChange}>
-          <MenuItem value={"Business"} primaryText="Business"/>
-          <MenuItem value={"Family"} primaryText="Family"/>
-          <MenuItem value={"Tourism"} primaryText="Tourism"/>
-        </SelectField>
-        <Divider />    
+          ref="travelPurpose"
+          floatingLabelText="Travel Purpose"
+          style={style}
+          value={this.state.travelPurpose} onChange={this.handleTravelPurposeChange}>
+            <MenuItem value={"Business"} primaryText="Business"/>
+            <MenuItem value={"Family"} primaryText="Family"/>
+            <MenuItem value={"Tourism"} primaryText="Tourism"/>
+        </SelectField>  
         <SelectField
-            ref="costOfStay"
-            floatingLabelText="Cost of Travel & Stay"
-                        style={style}
-            value={this.state.costOfStay} onChange={this.handleCostChange}>
-          <MenuItem value={"Myself"} primaryText="By Myself"/>
-          <MenuItem value={"Sponsor"} primaryText="By a Sponsor"/>
-        </SelectField>
-        <Divider />    
+          ref="costOfStay"
+          floatingLabelText="Cost of Travel & Stay"
+          style={style}
+          value={this.state.costOfStay} onChange={this.handleCostChange}>
+            <MenuItem value={"Myself"} primaryText="By Myself"/>
+            <MenuItem value={"Sponsor"} primaryText="By a Sponsor"/>
+        </SelectField> 
         <FileUpload/>
         <Photo/>
         <Divider />
@@ -174,8 +176,7 @@ NewApplication = React.createClass({
           label="Submit"
           onClick={this.handleSubmit}
         />
-   </Paper>
-   </AppCanvas>
+    </AppCanvas>
    );
   }
 });

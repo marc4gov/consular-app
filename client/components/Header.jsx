@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+
+=======
 //app.jsx
-injectTapEventPlugin();
+//injectTapEventPlugin();
+>>>>>>> origin/master
 
 var {
     AppBar,
@@ -48,10 +52,22 @@ Header = React.createClass({
   getInitialState: function () {
     //Meteor.subscribe("images");
     //Meteor.subscribe("applications");
-    return null;
+    var currentUser = Meteor.user();
+    return {
+      fullName: currentUser.profile.firstName + " " + currentUser.profile.surName
+    }
   },
   handleChange: function(value) {
     this.setState({value: value});
+  },
+  goHome: function(){
+    FlowRouter.go('/home')
+  },
+  goPhotoDetect: function(){
+    FlowRouter.go('/photodetect')
+  },
+  goApplications: function(){
+    FlowRouter.go('/applications')
   },
   goSignIn: function(){
     FlowRouter.go('/sign-in')
@@ -73,16 +89,18 @@ Header = React.createClass({
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
+        <MenuItem primaryText="Home"  onClick={this.goHome}/>
         <MenuItem primaryText="Sign in" onClick={this.goSignIn} />
-        <MenuItem primaryText="Help" />
+        <MenuItem primaryText="Applications"  onClick={this.goApplications}/>
+        <MenuItem primaryText="Photo Recognition" onClick={this.goPhotoDetect}/>        
         <MenuItem primaryText="Sign out" onClick={this.goLogout}/>
       </IconMenu>
     }
     children={ this.data.currentUser ?
                   <Card>
             <CardHeader
-            title="Logged in"
-            subtitle={this.data.currentUser.profile.surName}
+            title="Signed In"
+            subtitle={this.state.fullName}
             avatar={this.data.currentUser.profile.photo}
             />
             </Card> : ''

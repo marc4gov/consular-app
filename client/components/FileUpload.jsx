@@ -17,11 +17,11 @@ FileUpload = React.createClass({
         	});
    		});
 	},
-  	render() {
-    	return (
-      		<div>
-          		Photo upload <input type="file" onChange={this.uploadFile}/>
-      		</div>
-    	);
-  	}
+  render() {
+    return (
+      <div>
+          Photo <input type="file" onChange={this.uploadFile} />
+      </div>
+    );
+  }
 });

@@ -35,8 +35,10 @@ ApplicationList = React.createClass({
   },
 
     getInitialState: function(){
+      var currentUser = Meteor.user();
       var initial = { 
-          "currentUser": Meteor.user()
+          "currentUser": currentUser,
+          "fullName" : currentUser.profile.firstName + " " + currentUser.profile.surName
       };
 
       return initial;
@@ -45,53 +47,108 @@ ApplicationList = React.createClass({
     componentWillMount: function(){
     },
     componentDidMount: function(){
-       this.setState({
-          results: this.data.applications
-        })
     },
-    //what page is currently viewed
-    setPage: function(index){
+    getAge: function(dateString) {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+      {
+        age--;
+      }
+      return age;
     },
-    //this will handle how the data is sorted
-    sortData: function(sort, sortAscending, data){
-    },
-    //this changes whether data is sorted in ascending or descending order
-    changeSort: function(sort, sortAscending){
-    },
-    //this method handles the filtering of the data
-    setFilter: function(filter){
-    },
-    //this method handles determining the page size
-    setPageSize: function(size){
+
+    submitApp: function(){
+      var contact = new Object();
+      contact.fullName = this.data.currentUser.profile.firstName + " " + this.data.currentUser.profile.surName;
+      contact.country = this.data.currentUser.profile.country;
+      contact.nationality = this.data.currentUser.profile.nationality;
+      contact.birthDate = this.data.currentUser.profile.birthDate;
+      contact.passportNumber = this.data.currentUser.profile.passportNumber;
+      contact.travelPurpose = this.data.application.travelPurpose;    
+      contact.costOfStay = this.data.application.costOfStay;
+      contact.gender = this.data.application.gender;
+      contact.userId = this.data.currentUser._id;
+      contact.appId = this.data.application
+      contact.age = this.getAge(this.data.currentUser.profile.birthDate);
+
+      Meteor.call("fetchFromService", contact);
+      toastr.success(contact.fullName, "Application submitted");
     },
     getComponent: function(){
         console.log("go Pay");
         FlowRouter.go('/pay');
     },
+    getAge: function(dateString) {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+      {
+        age--;
+      }
+      return age;
+    },
+
+    submitApp: function(){
+      var contact = new Object();
+      contact.fullName = this.state.currentUser.profile.firstName + " " + this.state.currentUser.profile.surName;
+      contact.countryOfBirth = this.state.currentUser.profile.countryOfBirth;
+      contact.nationality = this.state.currentUser.profile.nationality;
+      contact.dateOfBirth = this.data.application.dateOfBirth;
+      contact.passportNumber = this.data.application.passportNumber;
+      contact.travelPurpose = this.data.application.travelPurpose;    
+      contact.costOfStay = this.data.application.costOfStay;
+      contact.gender = this.data.application.gender;
+      contact.userId = this.state.currentUser._id;
+      contact.appId = this.data.application._id;
+      contact.age = this.getAge(this.data.application.dateOfBirth);
+
+      console.log("Appdata", contact);
+
+      Meteor.call("fetchFromService", contact);
+      toastr.success(contact.fullName, "Application submitted");
+    },
+
     render: function(){
-    if (this.data.appsLoading) {
-      return <Loading />;
-    }
+
+      if (this.data.appsLoading) {
+        return <Loading />;
+      }
     
-        return (
+      return (
+
         <AppCanvas>
 
-            <Card>
+          <Card>
             <CardHeader
             title="Application for Visa"
-            subtitle={this.state.currentUser.profile.firstName}
+            subtitle={this.state.fullName}
             avatar={this.state.currentUser.profile.photo}
             />
             
             <CardTitle title={this.data.application.status} subtitle={this.data.application.travelPurpose} />
 
+            <CardActions>
+              <FlatButton label="Pay" onClick={this.getComponent}  />
+              <FlatButton label="Submit Application" onClick={this.submitApp}  />
+            </CardActions>
+          </Card>
 
+<<<<<<< HEAD
+        </AppCanvas>
+=======
         <CardActions>
             <FlatButton label="Pay" primary={true} onClick={this.getComponent}  />
-        </CardActions>
+             <FlatButton label="Submit" onClick={this.submitApp}  />
+       </CardActions>
         </Card>
 
       </AppCanvas>
+>>>>>>> origin/master
       );
     }
     

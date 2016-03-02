@@ -1,5 +1,5 @@
 //app.jsx
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 var {
     Toolbar,
@@ -54,12 +54,9 @@ Footer = React.createClass({
 
     return (
  <Toolbar>
-    <ToolbarGroup firstChild={true} float="left">
-    </ToolbarGroup>
-    <ToolbarGroup float="right">
-      <ToolbarTitle text="Options" />
+    <ToolbarGroup float="left">
+          <ToolbarTitle text="PoC DCV - Q1 2016 - demonstratie Process Redesign consulaire transacties" />
       <ToolbarSeparator />
-      <FlatButton label="Create Broadcast" primary={true} />
     </ToolbarGroup>
   </Toolbar>
     );

@@ -8,6 +8,7 @@ var {
     CardTitle,
     CardText,
     FlatButton,
+    TextField,
     Styles,
     List,
     ListItem
@@ -67,12 +68,19 @@ PhotoDetect = React.createClass({
   */
     hitPhoto: function() {
         this.convertImgToBase64(this.state.user.profile.photo, function(base64Img){
-          console.log('IMAGE:',base64Img);
+          //console.log('IMAGE:',base64Img);
           Meteor.call('requestPhotoDetect', base64Img, function(err, result) {
-            console.log("result Detect: ", result);
+            console.log("result Detect: ", result.content);            
+            Session.set("photoRecognition", result.content);
+            FlowRouter.go('/photorecognition');
+            //this.setState({"photoRecognition": result.content});
           }); 
         });
    
+    },
+
+    getPhotoRecognition: function() {
+        return Session.get('photoRecognition');
     },
 
 convertImgToBase64: function(url, callback, outputFormat){
@@ -98,9 +106,8 @@ convertImgToBase64: function(url, callback, outputFormat){
       <AppCanvas>
         <img src={this.state.user.profile.photo}/>
         <FlatButton
-            label="Photo Detect"
+            label="Photo Recognition"
             onClick={this.hitPhoto}/>
-
       </AppCanvas>
       );
   }

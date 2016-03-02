@@ -1,20 +1,13 @@
 //app.jsx
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 var {
     AppCanvas,
     AppBar,
     Styles,
-    RaisedButton,
-    Card,
-    CardHeader,
-    CardActions,
-    CardMedia,
-    CardTitle,
-    CardText,
     Dialog,
+    RaisedButton,
     FlatButton,
-    IconButton,
 } = MUI;
 
 const {

@@ -1,6 +1,6 @@
-Meteor.publish('applications', function() {
-  //check(appId, String);
-  return Applications.find();
+Meteor.publish('applications', function(applicant) {
+  //check(applicant, String);
+  return Applications.find({applicant: applicant});
 });
 
 Meteor.publish('images', function(){ return Images.find(); });
@@ -35,7 +35,8 @@ Meteor.methods({
 		data: {
 			"image": image1,
 			"gallery_name": "PoCDCV",
-			"threshold": 0.7
+			"threshold": 0.7,
+			"max_num_results": 3
 		},
 		headers: {
 			'Content-Type': 'application/json',
@@ -135,10 +136,62 @@ Meteor.methods({
 		return f.wait();
 	},
 
+<<<<<<< HEAD
         'userFeedToken': function() {
 
             return Stream.feedManager.getUserFeedToken('1');
-        }
+        },
+
+     fetchFromService: function(appdata) {
+=======
+    fetchFromService: function(appdata) {
+>>>>>>> origin/master
+
+      var url = "http://localhost:8080/engine-rest/process-definition/key/behandelenAlsCase/submit-form";
+      //synchronous 
+      var options = {
+        headers: {'Content-Type': 'application/json'},
+        data: {
+        		"variables" :
+                {
+					"fullName" : {"value" : appdata.fullName, "type": "String"},
+<<<<<<< HEAD
+ 					"dateOfBirth" : {"value" : appdata.dateOfBirth, "type": "Date"},
+ 					"gender" : {"value" : appdata.gender, "type": "String"},
+					"nationality" : {"value" : appdata.nationality, "type": "String"},
+					"countryOfBirth" : {"value" : appdata.countryOfBirth, "type": "String"},
+					"passportNumber": {"value" : appdata.passportNumber, "type": "String"},
+					"travelPurpose": {"value" : appdata.travelPurpose, "type": "String"},
+					"costOfStay": {"value" : appdata.costOfStay, "type": "String"},	
+					"ageApplicant": {"value" : appdata.age, "type": "Long"},
+					"applicant": {"value" : appdata.userId, "type": "String"},
+=======
+ 					"birthDate" : {"value" : appdata.birthDate, "type": "Date"},
+					"nationality" : {"value" : appdata.nationality, "type": "String"},
+					"country" : {"value" : appdata.country, "type": "String"},
+					"passportNumber": {"value" : appdata.passportNumber, "type": "Long"},
+					"travelPurpose": {"value" : appdata.travelPurpose, "type": "String"},
+					"age": {"value" : appdata.age, "type": "Long"},
+>>>>>>> origin/master
+					"status": {"value": "Open", "type":"String"},
+					 "bevoegd" : {"value" : true, "type": "Boolean"}
+ 				},
+ 				"businessKey" : appdata.appId
+        	}
+      };
+
+      var result = HTTP.post(url, options);
+      
+      if(result.statusCode==200) {
+        var respJson = JSON.parse(result.content);
+        console.log("Response received.");
+        return respJson;
+      } else {
+        console.log("Response issue: ", result.statusCode);
+        var errorJson = JSON.parse(result.content);
+        throw new Meteor.Error(result.statusCode, errorJson.error);
+      }
+    }
     
   
 });

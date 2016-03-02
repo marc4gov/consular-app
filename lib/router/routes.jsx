@@ -13,7 +13,17 @@ FlowRouter.route('/newapp', {
 
 FlowRouter.route('/photodetect', {  
   action() {
-    ReactLayout.render(PhotoDetect);
+      ReactLayout.render(MainLayout, { 
+          main: <PhotoDetect />
+      });
+  }
+});
+
+FlowRouter.route('/photorecognition', {  
+  action() {
+      ReactLayout.render(MainLayout, { 
+          main: <PhotoRecognition />
+      });
   }
 });
 
@@ -85,6 +95,9 @@ FlowRouter.route('/paymentsuccess', {
     //console.log(current);
     console.log("Query Params:", Session.get('resourcePath'));
     //var resourcePath = Session.get('resourcePath');
-    ReactLayout.render(PaymentSuccess, {resourcePath : Session.get('resourcePath')});
+    ReactLayout.render(MainLayout, { 
+          main: <PaymentSuccess  resourcePath={Session.get('resourcePath')}/>
+      });
+    //ReactLayout.render(PaymentSuccess, {resourcePath : Session.get('resourcePath')});
   }
 });
