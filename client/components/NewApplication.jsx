@@ -1,5 +1,5 @@
 
-//injectTapEventPlugin();
+injectTapEventPlugin();
 
 const {
     AppCanvas,
@@ -7,10 +7,6 @@ const {
     CardHeader,
     RadioButton,
     FlatButton,
-<<<<<<< HEAD
-    RadioButtonGroup,
-=======
->>>>>>> origin/master
     MenuItem,
     List,
     ListItem,

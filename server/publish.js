@@ -136,26 +136,25 @@ Meteor.methods({
 		return f.wait();
 	},
 
-<<<<<<< HEAD
         'userFeedToken': function() {
 
             return Stream.feedManager.getUserFeedToken('1');
         },
 
      fetchFromService: function(appdata) {
-=======
-    fetchFromService: function(appdata) {
->>>>>>> origin/master
 
-      var url = "http://localhost:8080/engine-rest/process-definition/key/behandelenAlsCase/submit-form";
+
+      var url = "http://localhost:8080/engine-rest/process-definition/key/PoCDCV/submit-form";
+      var dataAsSerialized = JSON.stringify(appdata);
+      console.log("dataAsSerialized", dataAsSerialized);
       //synchronous 
       var options = {
         headers: {'Content-Type': 'application/json'},
         data: {
         		"variables" :
                 {
+                	"application": {"value" : dataAsSerialized, "type": "String"},
 					"fullName" : {"value" : appdata.fullName, "type": "String"},
-<<<<<<< HEAD
  					"dateOfBirth" : {"value" : appdata.dateOfBirth, "type": "Date"},
  					"gender" : {"value" : appdata.gender, "type": "String"},
 					"nationality" : {"value" : appdata.nationality, "type": "String"},
@@ -165,14 +164,7 @@ Meteor.methods({
 					"costOfStay": {"value" : appdata.costOfStay, "type": "String"},	
 					"ageApplicant": {"value" : appdata.age, "type": "Long"},
 					"applicant": {"value" : appdata.userId, "type": "String"},
-=======
- 					"birthDate" : {"value" : appdata.birthDate, "type": "Date"},
-					"nationality" : {"value" : appdata.nationality, "type": "String"},
-					"country" : {"value" : appdata.country, "type": "String"},
-					"passportNumber": {"value" : appdata.passportNumber, "type": "Long"},
-					"travelPurpose": {"value" : appdata.travelPurpose, "type": "String"},
-					"age": {"value" : appdata.age, "type": "Long"},
->>>>>>> origin/master
+					"appId": {"value" : appdata.appId, "type": "String"},
 					"status": {"value": "Open", "type":"String"},
 					 "bevoegd" : {"value" : true, "type": "Boolean"}
  				},

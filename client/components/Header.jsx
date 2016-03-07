@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 
-=======
-//app.jsx
-//injectTapEventPlugin();
->>>>>>> origin/master
+injectTapEventPlugin();
 
 var {
     AppBar,
@@ -108,5 +104,5 @@ Header = React.createClass({
   />
 
     );
-}
+  }
 });

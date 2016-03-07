@@ -1,3 +1,5 @@
+injectTapEventPlugin();
+
 var {
     AppCanvas,
     AppBar,
@@ -138,17 +140,8 @@ ApplicationList = React.createClass({
             </CardActions>
           </Card>
 
-<<<<<<< HEAD
-        </AppCanvas>
-=======
-        <CardActions>
-            <FlatButton label="Pay" primary={true} onClick={this.getComponent}  />
-             <FlatButton label="Submit" onClick={this.submitApp}  />
-       </CardActions>
-        </Card>
-
       </AppCanvas>
->>>>>>> origin/master
+
       );
     }
     
