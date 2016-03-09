@@ -1,7 +1,12 @@
 // FileUpload
+
 FileUpload = React.createClass({
+  propTypes: {
+    uploadtype: React.PropTypes.string.isRequired
+  },
 	uploadFile: function(event) {
 		event.preventDefault();
+    var uploadtype = this.props.uploadtype;
 		FS.Utility.eachFile(event, function(file) {
        		Images.insert(file, function (err, fileObj) {
           		if (err){
@@ -9,9 +14,15 @@ FileUpload = React.createClass({
           		} else {
              // handle success depending what you need to do
             		var userId = Meteor.userId();
-            		var imagesURL = {
-              			'profile.photo' : '/cfs/files/images/' + fileObj._id,
+                var profile = 'profile.' + uploadtype;
+                console.log("profile: ", profile);
+                var imagesURL = {};
+                imagesURL[profile + ''] = '/cfs/files/images/' + fileObj._id;
+            		/*
+                var imagesURL = {
+              			 profile : '/cfs/files/images/' + fileObj._id,
             		};
+                */
             		Meteor.users.update(userId, {$set: imagesURL});
           		}
         	});
@@ -20,7 +31,7 @@ FileUpload = React.createClass({
   render() {
     return (
       <div>
-          Photo <input type="file" onChange={this.uploadFile} />
+          Upload {this.props.uploadtype} <input type="file" onChange={this.uploadFile} />
       </div>
     );
   }

@@ -110,13 +110,6 @@ NewApplication = React.createClass({
   },
 
   render: function () {
-    var submitted
-    if (this.state.submitted !== null) {
-      submitted = <div className="alert alert-success">
-        <p>Form data:</p>
-        <pre><code>{JSON.stringify(this.state.submitted, null, '  ')}</code></pre>
-      </div>
-    }
 
     return (
       <AppCanvas>
@@ -164,8 +157,10 @@ NewApplication = React.createClass({
             <MenuItem value={"Myself"} primaryText="By Myself"/>
             <MenuItem value={"Sponsor"} primaryText="By a Sponsor"/>
         </SelectField> 
-        <FileUpload/>
-        <Photo/>
+        <FileUpload uploadtype="photo"/>
+        <Divider />
+        <FileUpload uploadtype="passportscan"/>
+        <Scan/>
         <Divider />
         <FlatButton
           type="submit"

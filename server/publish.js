@@ -14,7 +14,6 @@ var Future = Meteor.npmRequire("fibers/future");
 //var request = Meteor.npmRequire('request');
 //var http = Meteor.npmRequire('http');
 
-
 Meteor.methods({
   '/applications/delete': function (appId) {
     Applications.remove(appId);
@@ -141,19 +140,37 @@ Meteor.methods({
             return Stream.feedManager.getUserFeedToken('1');
         },
 
+
+
      fetchFromService: function(appdata) {
 
-
       var url = "http://localhost:8080/engine-rest/process-definition/key/PoCDCV/submit-form";
-      var dataAsSerialized = JSON.stringify(appdata);
-      console.log("dataAsSerialized", dataAsSerialized);
+      //var dataAsSerialized = JSON.stringify(appdata);
+      //console.log("dataAsSerialized", dataAsSerialized);
+      //console.log("photofile", appdata.photofile);
       //synchronous 
       var options = {
         headers: {'Content-Type': 'application/json'},
         data: {
         		"variables" :
                 {
-                	"application": {"value" : dataAsSerialized, "type": "String"},
+                	//"application": {"value" : dataAsSerialized, "type": "String"},
+                	"photofile" : {"value" : appdata.photofile, "type" : "File",
+                			"valueInfo":
+                				{"filename" : "photo-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
+                				 "mimetype" : "image/jpeg", 
+                				 "encoding" : "base64"
+                				} 
+                			
+                	},                	
+                	"passportscanfile" : {"value" : appdata.passportscan, "type" : "File",
+                			"valueInfo":
+                				{"filename" : "passportscan-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
+                				 "mimetype" : "image/jpeg", 
+                				 "encoding" : "base64"
+                				} 
+                			
+                	},
 					"fullName" : {"value" : appdata.fullName, "type": "String"},
  					"dateOfBirth" : {"value" : appdata.dateOfBirth, "type": "Date"},
  					"gender" : {"value" : appdata.gender, "type": "String"},

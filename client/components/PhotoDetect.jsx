@@ -68,7 +68,8 @@ PhotoDetect = React.createClass({
   */
     hitPhoto: function() {
         this.convertImgToBase64(this.state.user.profile.photo, function(base64Img){
-          //console.log('IMAGE:',base64Img);
+          console.log('IMAGE:',base64Img);
+          Session.set("photofile", base64Img);
           Meteor.call('requestPhotoDetect', base64Img, function(err, result) {
             console.log("result Detect: ", result.content);            
             Session.set("photoRecognition", result.content);

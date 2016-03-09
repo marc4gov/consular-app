@@ -29,6 +29,7 @@ ApplicationList = React.createClass({
   // Loads items from the collection
   getMeteorData() {
     var currentUser = Meteor.user();
+    Meteor.subscribe("images");
     var handle = Meteor.subscribe('applications', currentUser._id);
     return {
       appsLoading: ! handle.ready(), // Use handle to show loading state
@@ -47,6 +48,7 @@ ApplicationList = React.createClass({
     },
     //general lifecycle methods
     componentWillMount: function(){
+
     },
     componentDidMount: function(){
     },
@@ -62,22 +64,52 @@ ApplicationList = React.createClass({
       return age;
     },
 
+    convertImgToBase64: function(url, callback, outputFormat){
+        var img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = function(){
+          var canvas = document.createElement('CANVAS');
+          var ctx = canvas.getContext('2d');
+          canvas.height = this.height;
+          canvas.width = this.width;
+          ctx.drawImage(this,0,0);
+          var dataURL = canvas.toDataURL(outputFormat || 'image/png');
+          callback(dataURL);
+          canvas = null; 
+      };
+      img.src = url;
+  },
+
+
+
     submitApp: function(){
+
+
       var contact = new Object();
-      contact.fullName = this.data.currentUser.profile.firstName + " " + this.data.currentUser.profile.surName;
-      contact.country = this.data.currentUser.profile.country;
-      contact.nationality = this.data.currentUser.profile.nationality;
-      contact.birthDate = this.data.currentUser.profile.birthDate;
-      contact.passportNumber = this.data.currentUser.profile.passportNumber;
+      var convert = this.convertImgToBase64;
+      var passportscan = this.state.currentUser.profile.passportscan;
+      contact.fullName = this.state.currentUser.profile.firstName + " " + this.state.currentUser.profile.surName;
+      contact.countryOfBirth = this.state.currentUser.profile.countryOfBirth;
+      contact.nationality = this.state.currentUser.profile.nationality;
+      contact.dateOfBirth = this.data.application.dateOfBirth;
+      contact.passportNumber = this.data.application.passportNumber;
       contact.travelPurpose = this.data.application.travelPurpose;    
       contact.costOfStay = this.data.application.costOfStay;
       contact.gender = this.data.application.gender;
-      contact.userId = this.data.currentUser._id;
-      contact.appId = this.data.application
-      contact.age = this.getAge(this.data.currentUser.profile.birthDate);
+      contact.userId = this.state.currentUser._id;
+      contact.appId = this.data.application._id;
+      contact.age = this.getAge(this.data.application.dateOfBirth);
 
-      Meteor.call("fetchFromService", contact);
-      toastr.success(contact.fullName, "Application submitted");
+      convert(this.state.currentUser.profile.photo, function(base64Img){
+          contact.photofile = base64Img.replace("data:image/png;base64,", "");
+          convert(passportscan, function(base64Img2){
+                    contact.passportscan = base64Img2.replace("data:image/png;base64,", "");
+                    console.log("passportscan", contact.passportscan);
+                    Meteor.call("fetchFromService", contact);
+                    toastr.success(contact.fullName, "Application submitted");
+          });
+      });
+
     },
     getComponent: function(){
         console.log("go Pay");
@@ -93,26 +125,6 @@ ApplicationList = React.createClass({
         age--;
       }
       return age;
-    },
-
-    submitApp: function(){
-      var contact = new Object();
-      contact.fullName = this.state.currentUser.profile.firstName + " " + this.state.currentUser.profile.surName;
-      contact.countryOfBirth = this.state.currentUser.profile.countryOfBirth;
-      contact.nationality = this.state.currentUser.profile.nationality;
-      contact.dateOfBirth = this.data.application.dateOfBirth;
-      contact.passportNumber = this.data.application.passportNumber;
-      contact.travelPurpose = this.data.application.travelPurpose;    
-      contact.costOfStay = this.data.application.costOfStay;
-      contact.gender = this.data.application.gender;
-      contact.userId = this.state.currentUser._id;
-      contact.appId = this.data.application._id;
-      contact.age = this.getAge(this.data.application.dateOfBirth);
-
-      console.log("Appdata", contact);
-
-      Meteor.call("fetchFromService", contact);
-      toastr.success(contact.fullName, "Application submitted");
     },
 
     render: function(){
