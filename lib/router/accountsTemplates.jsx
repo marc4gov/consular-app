@@ -139,7 +139,10 @@ AccountsTemplates.addField({
             text: "Indonesia",
             value: "Indonesia",
         },
-    ]
+        {
+            text: "Guinea",
+            value: "Guinea",
+        },    ]
 });
 
 AccountsTemplates.addField({
@@ -158,8 +161,11 @@ AccountsTemplates.addField({
         {
             text: "Indonesian",
             value: "Indonesian",
-        }
-    ]
+        },
+        {
+            text: "Guinea",
+            value: "Guinea",
+        },     ]
 });
 
 

@@ -1,11 +1,10 @@
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 const {
     AppCanvas,
     Card,
     CardHeader,
-    RadioButton,
     FlatButton,
     MenuItem,
     List,
@@ -43,7 +42,9 @@ NewApplication = React.createClass({
     return {
       myself: Meteor.user(),
       gender: "Male",
+      period: "Short stay",
       travelPurpose: "Tourism",
+      travelEU: "No",
       costOfStay: "Myself",
       submitted: null
     };
@@ -66,9 +67,15 @@ NewApplication = React.createClass({
   },
   handleGenderChange: function(event, index, value) {
     this.setState({gender: value});
+  },  
+  handlePeriodChange: function(event, index, value) {
+    this.setState({period: value});
   },
   handleTravelPurposeChange: function(event, index, value) {
     this.setState({travelPurpose: value});
+  },
+  handleTravelEUChange: function(event, index, value) {
+    this.setState({travelEU: value});
   },
   getValueFromSelect: function (ref){
     var divDOMNode = ReactDOM.findDOMNode(ref);
@@ -85,8 +92,10 @@ NewApplication = React.createClass({
   getFormData: function() {
     var data = {
       passportNumber: this.refs.passportNumber.getValue(),
+      travelEU: this.state.travelEU,
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
+      period: this.state.period,
       costOfStay: this.state.costOfStay,
       travelPurpose: this.state.travelPurpose
     }
@@ -99,8 +108,10 @@ NewApplication = React.createClass({
         passportNumber: data.passportNumber,
         dateOfBirth: data.dateOfBirth,
         gender: data.gender,
+        period: data.period,
         costOfStay: data.costOfStay,
         travelPurpose: data.travelPurpose,
+        travelEU: data.travelEU,
         status: "Open",
         createdAt: new Date(),            // current time
         applicant: Meteor.userId(),           // _id of logged in user
@@ -141,6 +152,14 @@ NewApplication = React.createClass({
             <MenuItem value={"Female"} primaryText="Female"/>
         </SelectField>
         <SelectField
+          ref="period"
+          floatingLabelText="Period"
+          style={style}
+          value={this.state.period} onChange={this.handlePeriodChange}>
+            <MenuItem value={"Short stay"} primaryText="Short stay"/>
+            <MenuItem value={"Long stay"} primaryText="Long stay"/>
+        </SelectField>
+        <SelectField
           ref="travelPurpose"
           floatingLabelText="Travel Purpose"
           style={style}
@@ -148,7 +167,12 @@ NewApplication = React.createClass({
             <MenuItem value={"Business"} primaryText="Business"/>
             <MenuItem value={"Family"} primaryText="Family"/>
             <MenuItem value={"Tourism"} primaryText="Tourism"/>
-        </SelectField>  
+            <MenuItem value={"Tourism"} primaryText="Tourism"/>
+            <MenuItem value={"Private"} primaryText="Private"/>
+            <MenuItem value={"Sport"} primaryText="Sport"/>
+            <MenuItem value={"Study"} primaryText="Study"/>
+            <MenuItem value={"Au-pair"} primaryText="Au-pair"/>
+        </SelectField> 
         <SelectField
           ref="costOfStay"
           floatingLabelText="Cost of Travel & Stay"
@@ -156,7 +180,15 @@ NewApplication = React.createClass({
           value={this.state.costOfStay} onChange={this.handleCostChange}>
             <MenuItem value={"Myself"} primaryText="By Myself"/>
             <MenuItem value={"Sponsor"} primaryText="By a Sponsor"/>
-        </SelectField> 
+        </SelectField>
+        <SelectField
+          ref="travelEU"
+          floatingLabelText="Travel with EU family member"
+          style={style}
+          value={this.state.travelEU} onChange={this.handleTravelEUChange}>
+            <MenuItem value={"Yes"} primaryText="Yes"/>
+            <MenuItem value={"No"} primaryText="No"/>
+        </SelectField>
         <FileUpload uploadtype="photo"/>
         <Divider />
         <FileUpload uploadtype="passportscan"/>

@@ -16,7 +16,7 @@ var {
     GridTile,
     StarBorder,
     MenuItem,
-    ActionAndroid,
+    Checkbox,
     DatePicker
     } = MUI;
 
@@ -99,7 +99,6 @@ GridListSimple = React.createClass({
         </GridTile>
       ))}
     </GridList>
-
       </AppCanvas>
         );
     }

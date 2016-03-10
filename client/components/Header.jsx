@@ -1,5 +1,5 @@
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 var {
     AppBar,
@@ -49,6 +49,7 @@ Header = React.createClass({
     //Meteor.subscribe("images");
     //Meteor.subscribe("applications");
     var currentUser = Meteor.user();
+    if (currentUser == null) return {fullName : "Guest"};
     return {
       fullName: currentUser.profile.firstName + " " + currentUser.profile.surName
     }

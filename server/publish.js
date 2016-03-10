@@ -145,8 +145,12 @@ Meteor.methods({
      fetchFromService: function(appdata) {
 
       var url = "http://localhost:8080/engine-rest/process-definition/key/PoCDCV/submit-form";
-      //var dataAsSerialized = JSON.stringify(appdata);
-      //console.log("dataAsSerialized", dataAsSerialized);
+      var photofile = appdata.photofile;
+      var passportscan = appdata.passportscan
+      appdata.photofile = "";
+      appdata.passportscan = "";
+      var dataAsSerialized = JSON.stringify(appdata);
+      console.log("dataAsSerialized", dataAsSerialized);
       //console.log("photofile", appdata.photofile);
       //synchronous 
       var options = {
@@ -155,7 +159,7 @@ Meteor.methods({
         		"variables" :
                 {
                 	//"application": {"value" : dataAsSerialized, "type": "String"},
-                	"photofile" : {"value" : appdata.photofile, "type" : "File",
+                	"photofile" : {"value" : photofile, "type" : "File",
                 			"valueInfo":
                 				{"filename" : "photo-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
                 				 "mimetype" : "image/jpeg", 
@@ -163,7 +167,7 @@ Meteor.methods({
                 				} 
                 			
                 	},                	
-                	"passportscanfile" : {"value" : appdata.passportscan, "type" : "File",
+                	"passportscanfile" : {"value" : passportscan, "type" : "File",
                 			"valueInfo":
                 				{"filename" : "passportscan-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
                 				 "mimetype" : "image/jpeg", 
@@ -171,6 +175,7 @@ Meteor.methods({
                 				} 
                 			
                 	},
+					"application" : {"value" : dataAsSerialized, "type": "String"},
 					"fullName" : {"value" : appdata.fullName, "type": "String"},
  					"dateOfBirth" : {"value" : appdata.dateOfBirth, "type": "Date"},
  					"gender" : {"value" : appdata.gender, "type": "String"},
