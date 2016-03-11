@@ -44,6 +44,7 @@ NewApplication = React.createClass({
       gender: "Male",
       period: "Short stay",
       travelPurpose: "Tourism",
+      occupation: "Tourism",
       travelEU: "No",
       costOfStay: "Myself",
       submitted: null
@@ -76,6 +77,9 @@ NewApplication = React.createClass({
   },
   handleTravelEUChange: function(event, index, value) {
     this.setState({travelEU: value});
+  },
+  handleOccupationChange: function(event, index, value) {
+    this.setState({occupation: value});
   },
   getValueFromSelect: function (ref){
     var divDOMNode = ReactDOM.findDOMNode(ref);
@@ -167,11 +171,24 @@ NewApplication = React.createClass({
             <MenuItem value={"Business"} primaryText="Business"/>
             <MenuItem value={"Family"} primaryText="Family"/>
             <MenuItem value={"Tourism"} primaryText="Tourism"/>
-            <MenuItem value={"Tourism"} primaryText="Tourism"/>
             <MenuItem value={"Private"} primaryText="Private"/>
+            <MenuItem value={"Sports, Cultural"} primaryText="Sports, Cultural"/>
+            <MenuItem value={"Studies"} primaryText="Studies"/>
+            <MenuItem value={"Au-pairs"} primaryText="Au-pairs"/>
+        </SelectField>
+        <SelectField
+          ref="occupation"
+          floatingLabelText="Occupation"
+          style={style}
+          value={this.state.occupation} onChange={this.handleOccupationChange}>
+            <MenuItem value={"Athlete"} primaryText="Athlete"/>
+            <MenuItem value={"Car buyer"} primaryText="Car buyer"/>
+            <MenuItem value={"Commercant"} primaryText="Commercant"/>
+            <MenuItem value={"Footballer"} primaryText="Footballer"/>
+            <MenuItem value={"Cultural"} primaryText="Cultural"/>
             <MenuItem value={"Sport"} primaryText="Sport"/>
-            <MenuItem value={"Study"} primaryText="Study"/>
-            <MenuItem value={"Au-pair"} primaryText="Au-pair"/>
+            <MenuItem value={"Self-employed"} primaryText="Self-employed"/>
+            <MenuItem value={"Tourism"} primaryText="Tourism"/>        
         </SelectField> 
         <SelectField
           ref="costOfStay"
@@ -188,6 +205,19 @@ NewApplication = React.createClass({
           value={this.state.travelEU} onChange={this.handleTravelEUChange}>
             <MenuItem value={"Yes"} primaryText="Yes"/>
             <MenuItem value={"No"} primaryText="No"/>
+        </SelectField>
+        <SelectField
+          ref="location"
+          floatingLabelText="Location of Visa Pick-up"
+          style={style}
+          value={this.state.location} onChange={this.handleLocationChange}>
+            <MenuItem value={"ACC"} primaryText="Accra"/>
+            <MenuItem value={"ADD"} primaryText="Addis Abeba"/>            
+            <MenuItem value={"BAM"} primaryText="Bamako"/>            
+            <MenuItem value={"COT"} primaryText="Cotonou"/>
+            <MenuItem value={"DAK"} primaryText="Dakar"/>
+            <MenuItem value={"KHA"} primaryText="Khartoum"/>
+            <MenuItem value={"RAB"} primaryText="Rabat"/>
         </SelectField>
         <FileUpload uploadtype="photo"/>
         <Divider />
