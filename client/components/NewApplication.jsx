@@ -45,6 +45,7 @@ NewApplication = React.createClass({
       period: "Short stay",
       travelPurpose: "Tourism",
       occupation: "Tourism",
+      location: "ACC",
       travelEU: "No",
       costOfStay: "Myself",
       submitted: null
@@ -80,6 +81,9 @@ NewApplication = React.createClass({
   },
   handleOccupationChange: function(event, index, value) {
     this.setState({occupation: value});
+  },  
+  handleLocationChange: function(event, index, value) {
+    this.setState({location: value});
   },
   getValueFromSelect: function (ref){
     var divDOMNode = ReactDOM.findDOMNode(ref);
@@ -100,6 +104,8 @@ NewApplication = React.createClass({
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
       period: this.state.period,
+      location: this.state.location,
+      occupation: this.state.occupation,
       costOfStay: this.state.costOfStay,
       travelPurpose: this.state.travelPurpose
     }
@@ -113,6 +119,8 @@ NewApplication = React.createClass({
         dateOfBirth: data.dateOfBirth,
         gender: data.gender,
         period: data.period,
+        location: data.location,
+        occupation: data.occupation,
         costOfStay: data.costOfStay,
         travelPurpose: data.travelPurpose,
         travelEU: data.travelEU,

@@ -78,12 +78,11 @@ ApplicationList = React.createClass({
           canvas = null; 
       };
       img.src = url;
-  },
+    },
 
 
 
     submitApp: function(){
-
 
       var contact = new Object();
       var convert = this.convertImgToBase64;
@@ -93,8 +92,12 @@ ApplicationList = React.createClass({
       contact.nationality = this.state.currentUser.profile.nationality;
       contact.dateOfBirth = this.data.application.dateOfBirth;
       contact.passportNumber = this.data.application.passportNumber;
-      contact.travelPurpose = this.data.application.travelPurpose;    
+      contact.travelPurpose = this.data.application.travelPurpose;         
+      contact.travelEU = this.data.application.travelEU;    
       contact.costOfStay = this.data.application.costOfStay;
+      contact.location = this.data.application.location;
+      contact.occupation = this.data.application.occupation;
+      contact.period = this.data.application.period;
       contact.gender = this.data.application.gender;
       contact.userId = this.state.currentUser._id;
       contact.appId = this.data.application._id;
@@ -114,17 +117,6 @@ ApplicationList = React.createClass({
     getComponent: function(){
         console.log("go Pay");
         FlowRouter.go('/pay');
-    },
-    getAge: function(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
-      {
-        age--;
-      }
-      return age;
     },
 
     render: function(){
