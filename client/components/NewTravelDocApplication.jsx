@@ -76,8 +76,8 @@ NewApplication = React.createClass({
   handlePeriodChange: function(event, index, value) {
     this.setState({period: value});
   },
-  handleTravelPurposeChange: function(event, index, value) {
-    this.setState({travelPurpose: value});
+  handleTravelDocChange: function(event, index, value) {
+    this.setState({travelDoc: value});
   },
   handleTravelEUChange: function(event, index, value) {
     this.setState({travelEU: value});
@@ -135,36 +135,6 @@ NewApplication = React.createClass({
       FlowRouter.go('/applications')
   },
 
-  getFieldNames: function(name) {
-    var inputs = [];
-    if (name == "schengenvisa") {
-        inputs.push( 
-                          { "type":"select", 
-                            "ref": "period",
-                            "options": ["Short stay", "Long stay"],
-                            "stateChange" : "handlePeriodChange"
-                          },
-                          { "type":"select", 
-                            "ref": "travelPurpose",
-                            "options": ["Business", "Family", "Tourism", "Private", "Sports", "Studies", "Au-pairs"],
-                            "stateChange" : "handleTravelPurposeChange"
-                          },
-                          { "type":"select", 
-                            "ref": "occupation",
-                            "options": ["Athlete", "Car buyer", "Footballer", "Commercant", "Sport", "Cultural", "Self-employed", "Tourism"],
-                            "stateChange" : "handleOccupationChange"
-                          },
-                          { "type":"select", 
-                            "ref": "location",
-                            "options": ["ACC", "ADD", "BAM", "COT", "DAK", "KHA", "RAB"],
-                            "stateChange" : "handleOccupationChange"
-                          },
-
-                          );
-    }
-    return inputs;
-  },
-
 
   render: function () {
 
@@ -184,6 +154,11 @@ NewApplication = React.createClass({
           floatingLabelText="Passport Number"
           style={style}
           value="1234ABC56" />
+        <TextField
+          ref="bsn"
+          floatingLabelText="BSN Number"
+          style={style}
+          value="188830000" />
         <DatePicker 
           ref="dateOfBirth"
           floatingLabelText="Date of Birth"
@@ -198,25 +173,25 @@ NewApplication = React.createClass({
             <MenuItem value={"Female"} primaryText="Female"/>
         </SelectField>
         <SelectField
-          ref="period"
-          floatingLabelText="Period"
+          ref="maritalStatus"
+          floatingLabelText="Marital Status"
           style={style}
-          value={this.state.period} onChange={this.handlePeriodChange}>
-            <MenuItem value={"Short stay"} primaryText="Short stay"/>
-            <MenuItem value={"Long stay"} primaryText="Long stay"/>
+          value={this.state.maritalStatus} onChange={this.handleMaritalChange}>
+            <MenuItem value={"Gehuwd"} primaryText="Gehuwd"/>
+            <MenuItem value={"Gescheiden"} primaryText="Gescheiden"/>
+            <MenuItem value={"Gescheiden"} primaryText="Gescheiden"/>
         </SelectField>
         <SelectField
-          ref="travelPurpose"
-          floatingLabelText="Travel Purpose"
+          ref="travelDoc"
+          floatingLabelText="Travel Doc Type"
           style={style}
-          value={this.state.travelPurpose} onChange={this.handleTravelPurposeChange}>
-            <MenuItem value={"Business"} primaryText="Business"/>
-            <MenuItem value={"Family"} primaryText="Family"/>
-            <MenuItem value={"Tourism"} primaryText="Tourism"/>
-            <MenuItem value={"Private"} primaryText="Private"/>
-            <MenuItem value={"Sports, Cultural"} primaryText="Sports, Cultural"/>
-            <MenuItem value={"Studies"} primaryText="Studies"/>
-            <MenuItem value={"Au-pairs"} primaryText="Au-pairs"/>
+          value={this.state.travelDoc} onChange={this.handleTravelDocChange}>
+            <MenuItem value={"Paspoort"} primaryText="Paspoort"/>
+            <MenuItem value={"Tweede Paspoort"} primaryText="Tweede Paspoort"/>
+            <MenuItem value={"Zakenpaspoort"} primaryText="Zakenpaspoort"/>
+            <MenuItem value={"ID kaart"} primaryText="ID kaart"/>
+            <MenuItem value={"Noodpaspoort"} primaryText="Noodpaspoort"/>
+            <MenuItem value={"Laissez-passer"} primaryText="Laissez-passer"/>
         </SelectField>
         <SelectField
           ref="occupation"

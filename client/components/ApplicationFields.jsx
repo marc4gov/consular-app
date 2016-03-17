@@ -3,15 +3,9 @@
 
 const {
     AppCanvas,
-    Card,
-    CardHeader,
-    FlatButton,
-    MenuItem,
-    List,
-    ListItem,
+
     TextField,
-    Divider,
-    Paper,
+    MenuItem,
     SelectField,
     DatePicker
     } = MUI;
@@ -25,23 +19,15 @@ const style = {
   marginLeft: 20,
 };
 
-NewApplication = React.createClass({
+ApplicationFields = React.createClass({
 
-  // This mixin makes the getMeteorData method work
-  mixins: [ReactMeteorData],
- 
   // Loads items from the collection
-  getMeteorData() {
-    Meteor.subscribe("images");
-    Meteor.subscribe("applications");
-    return {
-      applications: Applications.find({}).fetch()
-    }
-  },
+
   getInitialState: function () {
     var appType = Session.get("appType");
     console.log("appType = ", appType);
-
+    Meteor.subscribe("images");
+    Meteor.subscribe("applications");
     return {
       myself: Meteor.user(),
       gender: "Male",
@@ -53,18 +39,6 @@ NewApplication = React.createClass({
       costOfStay: "Myself",
       appType: appType
     };
-  },
-
-  enableButton: function () {
-    this.setState({
-      canSubmit: true
-    });
-  },
-
-  disableButton: function () {
-    this.setState({
-      canSubmit: false
-    });
   },
 
   handleCostChange: function(event, index, value) {
@@ -94,45 +68,6 @@ NewApplication = React.createClass({
        lastChild would point to the select child node*/
     var selectNode = divDOMNode.lastChild;
     return selectNode.options[selectNode.selectedIndex].text;
-  },
-  handleDrop: function (dataTransfer) {
-    var files = dataTransfer.files;
-    console.log("Files: ", files);
-    // Do something with dropped files... 
-  },
-  getFormData: function() {
-    var data = {
-      passportNumber: this.refs.passportNumber.getValue(),
-      travelEU: this.state.travelEU,
-      dateOfBirth: this.refs.dateOfBirth.getDate(),
-      gender: this.state.gender,
-      period: this.state.period,
-      location: this.state.location,
-      occupation: this.state.occupation,
-      costOfStay: this.state.costOfStay,
-      travelPurpose: this.state.travelPurpose
-    }
-    return data
-  },
-  handleSubmit: function() {
-      var data = this.getFormData();
-      console.log("Data", data);
-      Applications.insert({
-        passportNumber: data.passportNumber,
-        dateOfBirth: data.dateOfBirth,
-        gender: data.gender,
-        period: data.period,
-        location: data.location,
-        occupation: data.occupation,
-        costOfStay: data.costOfStay,
-        travelPurpose: data.travelPurpose,
-        travelEU: data.travelEU,
-        status: "Open",
-        createdAt: new Date(),            // current time
-        applicant: Meteor.userId(),           // _id of logged in user
-        createdAt: new Date() // current time
-      });
-      FlowRouter.go('/applications')
   },
 
   getFieldNames: function(name) {
@@ -165,20 +100,10 @@ NewApplication = React.createClass({
     return inputs;
   },
 
-
   render: function () {
 
     return (
-      <AppCanvas>
-
-        <Card>
-        <CardHeader
-          title="New Application"
-          subtitle={this.state.appType.name}
-          avatar={this.state.appType.image}
-        />
-        </Card>
-
+      <div>
         <TextField
           ref="passportNumber"
           floatingLabelText="Passport Number"
@@ -261,18 +186,7 @@ NewApplication = React.createClass({
             <MenuItem value={"KHA"} primaryText="Khartoum"/>
             <MenuItem value={"RAB"} primaryText="Rabat"/>
         </SelectField>
-
-        <FileUpload uploadtype="photo"/>
-        <Divider />
-        <FileUpload uploadtype="passportscan"/>
-        <Scan/>
-        <Divider />
-        <FlatButton
-          type="submit"
-          label="Submit"
-          onClick={this.handleSubmit}
-        />
-    </AppCanvas>
+        </div>
    );
   }
 });

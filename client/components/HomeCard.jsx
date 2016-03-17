@@ -39,6 +39,7 @@ HomeCard = React.createClass({
   },
   getComponent: function(name) {
     console.log(name);
+    Session.set("picture", "/images/" + this.props.name + ".jpeg" )
     FlowRouter.go('/'+ tile.link)
   },
   render: function () {

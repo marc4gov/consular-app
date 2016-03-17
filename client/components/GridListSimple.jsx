@@ -48,18 +48,18 @@ const tilesData = [
   },
   {
     img: '/images/caribvisa.jpeg',
-    title: 'Caribisch Visa',
-    link: 'caribvis',
+    title: 'Caribbean Visa',
+    link: 'caribvisa',
   },
   {
     img: '/images/paspoort.jpeg',
-    title: 'Paspoort',
-    link: 'paspoort',
+    title: 'Travel document',
+    link: 'traveldoc',
   },
   {
     img: '/images/legalisatie.jpeg',
-    title: 'Legalisatie',
-    link: 'legalisatie',
+    title: 'Legalization',
+    link: 'legal',
   }
 ];
 
@@ -76,6 +76,7 @@ GridListSimple = React.createClass({
 
     getComponent: function(tile) {
         console.log(tile.title);
+        Session.set("appType", {"name": tile.title, "image": tile.img})
         FlowRouter.go('/'+ tile.link)
     },
  
