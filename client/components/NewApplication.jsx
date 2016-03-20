@@ -107,8 +107,13 @@ NewApplication = React.createClass({
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
       period: this.state.period,
+<<<<<<< Updated upstream
       location: this.state.location,
       occupation: this.state.occupation,
+=======
+      occupation: this.state.occupation,
+      location: this.state.location,
+>>>>>>> Stashed changes
       costOfStay: this.state.costOfStay,
       travelPurpose: this.state.travelPurpose
     }
@@ -126,6 +131,8 @@ NewApplication = React.createClass({
         occupation: data.occupation,
         costOfStay: data.costOfStay,
         travelPurpose: data.travelPurpose,
+        occupation: data.occupation,
+        location: data.location,
         travelEU: data.travelEU,
         status: "Open",
         createdAt: new Date(),            // current time
