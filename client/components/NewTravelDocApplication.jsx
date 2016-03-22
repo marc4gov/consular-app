@@ -179,7 +179,7 @@ NewApplication = React.createClass({
           value={this.state.maritalStatus} onChange={this.handleMaritalChange}>
             <MenuItem value={"Gehuwd"} primaryText="Gehuwd"/>
             <MenuItem value={"Gescheiden"} primaryText="Gescheiden"/>
-            <MenuItem value={"Gescheiden"} primaryText="Gescheiden"/>
+            <MenuItem value={"Alleenstaand"} primaryText="Alleenstaand"/>
         </SelectField>
         <SelectField
           ref="travelDoc"
@@ -192,49 +192,6 @@ NewApplication = React.createClass({
             <MenuItem value={"ID kaart"} primaryText="ID kaart"/>
             <MenuItem value={"Noodpaspoort"} primaryText="Noodpaspoort"/>
             <MenuItem value={"Laissez-passer"} primaryText="Laissez-passer"/>
-        </SelectField>
-        <SelectField
-          ref="occupation"
-          floatingLabelText="Occupation"
-          style={style}
-          value={this.state.occupation} onChange={this.handleOccupationChange}>
-            <MenuItem value={"Athlete"} primaryText="Athlete"/>
-            <MenuItem value={"Car buyer"} primaryText="Car buyer"/>
-            <MenuItem value={"Commercant"} primaryText="Commercant"/>
-            <MenuItem value={"Footballer"} primaryText="Footballer"/>
-            <MenuItem value={"Cultural"} primaryText="Cultural"/>
-            <MenuItem value={"Sport"} primaryText="Sport"/>
-            <MenuItem value={"Self-employed"} primaryText="Self-employed"/>
-            <MenuItem value={"Tourism"} primaryText="Tourism"/>        
-        </SelectField> 
-        <SelectField
-          ref="costOfStay"
-          floatingLabelText="Cost of Travel & Stay"
-          style={style}
-          value={this.state.costOfStay} onChange={this.handleCostChange}>
-            <MenuItem value={"Myself"} primaryText="By Myself"/>
-            <MenuItem value={"Sponsor"} primaryText="By a Sponsor"/>
-        </SelectField>
-        <SelectField
-          ref="travelEU"
-          floatingLabelText="Travel with EU family member"
-          style={style}
-          value={this.state.travelEU} onChange={this.handleTravelEUChange}>
-            <MenuItem value={"Yes"} primaryText="Yes"/>
-            <MenuItem value={"No"} primaryText="No"/>
-        </SelectField>
-        <SelectField
-          ref="location"
-          floatingLabelText="Location of Visa Pick-up"
-          style={style}
-          value={this.state.location} onChange={this.handleLocationChange}>
-            <MenuItem value={"ACC"} primaryText="Accra"/>
-            <MenuItem value={"ADD"} primaryText="Addis Abeba"/>            
-            <MenuItem value={"BAM"} primaryText="Bamako"/>            
-            <MenuItem value={"COT"} primaryText="Cotonou"/>
-            <MenuItem value={"DAK"} primaryText="Dakar"/>
-            <MenuItem value={"KHA"} primaryText="Khartoum"/>
-            <MenuItem value={"RAB"} primaryText="Rabat"/>
         </SelectField>
 
         <FileUpload uploadtype="photo"/>

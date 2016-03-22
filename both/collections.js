@@ -17,3 +17,4 @@ Images.allow({
 });
 
 Applications = new Mongo.Collection("applications");
+Msgs = new Mongo.Collection("msgs");

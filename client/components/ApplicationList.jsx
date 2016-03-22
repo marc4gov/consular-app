@@ -9,7 +9,7 @@ var {
     CardMedia,
     CardTitle,
     CardText,
-    FlatButton,
+    RaisedButton,
     TextField,
     Styles,
     List,
@@ -30,10 +30,14 @@ ApplicationList = React.createClass({
   getMeteorData() {
     var currentUser = Meteor.user();
     Meteor.subscribe("images");
+
     var handle = Meteor.subscribe('applications', currentUser._id);
+    var handle2 = Meteor.subscribe('msgs', currentUser._id);
     return {
-      appsLoading: ! handle.ready(), // Use handle to show loading state
-      application: Applications.findOne({applicant: currentUser._id})
+      appsLoading: ! handle.ready() || ! handle2.ready(), // Use handle to show loading state
+      application: Applications.findOne({applicant: currentUser._id}),
+      //message: Msgs.findOne({applicant: currentUser._id}),
+      messages: Msgs.find({applicant: currentUser._id}).fetch()
     };
   },
 
@@ -51,6 +55,7 @@ ApplicationList = React.createClass({
 
     },
     componentDidMount: function(){
+
     },
     getAge: function(dateString) {
       var today = new Date();
@@ -118,12 +123,26 @@ ApplicationList = React.createClass({
         console.log("go Pay");
         FlowRouter.go('/pay');
     },
-
+    renderMessages: function(){
+      // 
+      return this.data.messages.map((message) => {
+        return <Message datetime={message.datetime} subject={message.subject} content={message.content} />;
+      });
+    },
+    getApplicationDetails: function(){
+      var d = this.data.application.dateOfBirth;
+      var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+        d.getFullYear();
+      var details = this.data.application.gender + " | " + datestring + " | " + this.data.application.travelPurpose + " | " + this.data.application.period;
+      return details;
+    },
     render: function(){
 
       if (this.data.appsLoading) {
         return <Loading />;
       }
+
+      var details = this.getApplicationDetails();
     
       return (
 
@@ -136,11 +155,14 @@ ApplicationList = React.createClass({
             avatar={this.state.currentUser.profile.photo}
             />
             
-            <CardTitle title={this.data.application.status} subtitle={this.data.application.travelPurpose} />
+            <CardTitle title={this.data.application.status} subtitle={details} />
+
+            
+            <MessageList messages={this.data.messages} />;
 
             <CardActions>
-              <FlatButton label="Pay" onClick={this.getComponent}  />
-              <FlatButton label="Submit Application" onClick={this.submitApp}  />
+              <RaisedButton label="Pay" onClick={this.getComponent}  />
+              <RaisedButton label="Submit Application" onClick={this.submitApp}  />
             </CardActions>
           </Card>
 

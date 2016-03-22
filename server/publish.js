@@ -3,6 +3,11 @@ Meteor.publish('applications', function(applicant) {
   return Applications.find({applicant: applicant});
 });
 
+Meteor.publish("msgs", function(applicant){ 
+	return Msgs.find({applicant: applicant}); 
+});
+
+
 Meteor.publish('images', function(){ return Images.find(); });
 
 Meteor.publish('imagesById', function(imageId) {
@@ -25,6 +30,14 @@ Meteor.methods({
 
   "userExists": function(username){
           return !!Meteor.users.findOne({username: username});
+  },
+  "insertMessage": function(msgdata) {
+  		console.log("Msg data: ", msgdata);
+  		Msgs.insert({applicant: msgdata.applicant, 
+  						datetime: new Date(), 
+  						subject: msgdata.subject, 
+  						content: msgdata.content
+  					});
   },
 
 'requestPhotoDetect': function (imageB64) {

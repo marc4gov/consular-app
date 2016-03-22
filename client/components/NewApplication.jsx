@@ -33,10 +33,6 @@ NewApplication = React.createClass({
   // Loads items from the collection
   getMeteorData() {
     Meteor.subscribe("images");
-    Meteor.subscribe("applications");
-    return {
-      applications: Applications.find({}).fetch()
-    }
   },
   getInitialState: function () {
     var appType = Session.get("appType");
@@ -53,18 +49,6 @@ NewApplication = React.createClass({
       costOfStay: "Myself",
       appType: appType
     };
-  },
-
-  enableButton: function () {
-    this.setState({
-      canSubmit: true
-    });
-  },
-
-  disableButton: function () {
-    this.setState({
-      canSubmit: false
-    });
   },
 
   handleCostChange: function(event, index, value) {
@@ -117,10 +101,18 @@ NewApplication = React.createClass({
       costOfStay: this.state.costOfStay,
       travelPurpose: this.state.travelPurpose
     }
-    return data
+    return data;
   },
   handleSubmit: function() {
       var data = this.getFormData();
+            //var msgdata = new Object();
+      console.log("insertMessage...");
+      Meteor.call("insertMessage", {
+        applicant: Meteor.userId(),
+        datetime: new Date(),
+        subject: "New Application",
+        content: "Submitted New Application!"
+      });
       console.log("Data", data);
       Applications.insert({
         passportNumber: data.passportNumber,
@@ -137,39 +129,9 @@ NewApplication = React.createClass({
         status: "Open",
         createdAt: new Date(),            // current time
         applicant: Meteor.userId(),           // _id of logged in user
-        createdAt: new Date() // current time
       });
+
       FlowRouter.go('/applications')
-  },
-
-  getFieldNames: function(name) {
-    var inputs = [];
-    if (name == "schengenvisa") {
-        inputs.push( 
-                          { "type":"select", 
-                            "ref": "period",
-                            "options": ["Short stay", "Long stay"],
-                            "stateChange" : "handlePeriodChange"
-                          },
-                          { "type":"select", 
-                            "ref": "travelPurpose",
-                            "options": ["Business", "Family", "Tourism", "Private", "Sports", "Studies", "Au-pairs"],
-                            "stateChange" : "handleTravelPurposeChange"
-                          },
-                          { "type":"select", 
-                            "ref": "occupation",
-                            "options": ["Athlete", "Car buyer", "Footballer", "Commercant", "Sport", "Cultural", "Self-employed", "Tourism"],
-                            "stateChange" : "handleOccupationChange"
-                          },
-                          { "type":"select", 
-                            "ref": "location",
-                            "options": ["ACC", "ADD", "BAM", "COT", "DAK", "KHA", "RAB"],
-                            "stateChange" : "handleOccupationChange"
-                          },
-
-                          );
-    }
-    return inputs;
   },
 
 
