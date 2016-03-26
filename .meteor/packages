@@ -42,3 +42,4 @@ cfs:gridfs
 edgee:slingshot
 msavin:mongol
 xcv58:collection-api
+joncursi:socket-io-client

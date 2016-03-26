@@ -108,12 +108,22 @@ ApplicationList = React.createClass({
       contact.appId = this.data.application._id;
       contact.age = this.getAge(this.data.application.dateOfBirth);
 
+      var applicationData = new Object();
+      applicationData.name = contact.appId;
+      applicationData.type1 = "Visa";
+      applicationData.type = "create-product";
+      applicationData.user = "aanvrager";
+      applicationData.amount = "60";
+      applicationData.size = "35";
+      applicationData.color = "green";
+
       convert(this.state.currentUser.profile.photo, function(base64Img){
           contact.photofile = base64Img.replace("data:image/png;base64,", "");
           convert(passportscan, function(base64Img2){
                     contact.passportscan = base64Img2.replace("data:image/png;base64,", "");
-                    console.log("passportscan", contact.passportscan);
-                    Meteor.call("fetchFromService", contact);
+                    Meteor.call("sendToBackend", contact);
+                    Meteor.call("addToBlockchain", applicationData);
+                    console.log("applicationData", applicationData);
                     toastr.success(contact.fullName, "Application submitted");
           });
       });

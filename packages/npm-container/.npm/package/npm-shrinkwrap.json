@@ -84,6 +84,17 @@
           "version": "0.5.0"
         }
       }
+    },
+    "ws": {
+      "version": "1.0.1",
+      "dependencies": {
+        "options": {
+          "version": "0.0.6"
+        },
+        "ultron": {
+          "version": "1.0.2"
+        }
+      }
     }
   }
 }

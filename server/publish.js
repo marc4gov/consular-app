@@ -16,16 +16,31 @@ Meteor.publish('imagesById', function(imageId) {
 
 var querystring = Meteor.npmRequire('querystring');
 var Future = Meteor.npmRequire("fibers/future");
-//var request = Meteor.npmRequire('request');
-//var http = Meteor.npmRequire('http');
+var WebSocket = Meteor.npmRequire("ws");
+
 
 Meteor.methods({
-  '/applications/delete': function (appId) {
-    Applications.remove(appId);
+  "addToBlockchain": function(data) {
+  	//var f = new Future();
+  	console.log('creating product in blockchain:', data);
+	var options = {
+		data: data,
+		headers: {
+			'Content-Type': 'application/json',
+		}
+	};
+	//console.log("Options:", options);
 
-  },
-  '/applications/setStatus': function (appId, statusUpdate) {
-    Applications.update(appId, {$set: {status: statusUpdate}});
+	HTTP.call("POST", "http://localhost:5001/application", options, 
+		function(error, result) {
+  		if (!error) {
+  			console.log("Result blockchain: ", result);
+  			return result;
+  		} else {
+  			console.log("Error blockchain: ", error);
+  			return error;
+  		}
+	});
   },
 
   "userExists": function(username){
@@ -155,7 +170,7 @@ Meteor.methods({
 
 
 
-     fetchFromService: function(appdata) {
+    sendToBackend: function(appdata) {
 
       var url = "http://localhost:8080/engine-rest/process-definition/key/PoCDCV/submit-form";
       var photofile = appdata.photofile;

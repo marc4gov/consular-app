@@ -91,13 +91,8 @@ NewApplication = React.createClass({
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
       period: this.state.period,
-<<<<<<< Updated upstream
       location: this.state.location,
       occupation: this.state.occupation,
-=======
-      occupation: this.state.occupation,
-      location: this.state.location,
->>>>>>> Stashed changes
       costOfStay: this.state.costOfStay,
       travelPurpose: this.state.travelPurpose
     }
