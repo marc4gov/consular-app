@@ -78,7 +78,7 @@ Header = React.createClass({
 
     return (
   <AppBar
-    title="Proof of Concept FOBO 2018"
+    title="Herinrichting Consulaire processen 2018"
     iconElementLeft={
       <IconMenu
         iconButtonElement={

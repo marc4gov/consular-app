@@ -41,7 +41,7 @@ FlowRouter.route('/schengenvisa', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
       ReactLayout.render(MainLayout, { 
-          main: <NewApplication 
+          main: <NewVisaApplication 
                   name="Schengen Visa"
                   img="schengenvisa"
                  />
@@ -53,7 +53,7 @@ FlowRouter.route('/caribvisa', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
       ReactLayout.render(MainLayout, { 
-          main: <NewApplication 
+          main: <NewVisaApplication 
                   name="Caribbean Visa"
                   img="caribvisa"
                  />
@@ -65,7 +65,7 @@ FlowRouter.route('/traveldoc', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
       ReactLayout.render(MainLayout, { 
-          main: <NewApplication 
+          main: <NewTravelDocApplication 
                   name="Reisdocumenten"
                   img="paspoort"
                  />
@@ -77,7 +77,7 @@ FlowRouter.route('/legal', {
   triggersEnter: [AccountsTemplates.ensureSignedIn],
   action() {
       ReactLayout.render(MainLayout, { 
-          main: <NewApplication 
+          main: <NewLegalDocApplication 
                   name="Legal documents"
                   img="legalisatie"
                  />

@@ -16,7 +16,6 @@ Meteor.publish('imagesById', function(imageId) {
 
 var querystring = Meteor.npmRequire('querystring');
 var Future = Meteor.npmRequire("fibers/future");
-var WebSocket = Meteor.npmRequire("ws");
 
 
 Meteor.methods({
@@ -174,57 +173,65 @@ Meteor.methods({
 
       var url = "http://localhost:8080/engine-rest/process-definition/key/PoCDCV/submit-form";
       var photofile = appdata.photofile;
-      var passportscan = appdata.passportscan
-      appdata.photofile = "";
-      appdata.passportscan = "";
-      var dataAsSerialized = JSON.stringify(appdata);
-      console.log("dataAsSerialized", dataAsSerialized);
-      //console.log("photofile", appdata.photofile);
-      //synchronous 
-      var options = {
-        headers: {'Content-Type': 'application/json'},
-        data: {
+      var passportscan = appdata.passportscan;
+
+      var jsonProcessVariables = {
         		"variables" :
                 {
-                	//"application": {"value" : dataAsSerialized, "type": "String"},
                 	"photofile" : {"value" : photofile, "type" : "File",
                 			"valueInfo":
                 				{"filename" : "photo-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
                 				 "mimetype" : "image/jpeg", 
                 				 "encoding" : "base64"
-                				} 
-                			
+                				} 		
                 	},                	
                 	"passportscanfile" : {"value" : passportscan, "type" : "File",
                 			"valueInfo":
                 				{"filename" : "passportscan-" + appdata.fullName + "-" + appdata.userId + ".jpg", 
                 				 "mimetype" : "image/jpeg", 
                 				 "encoding" : "base64"
-                				} 
-                			
+                				}	
                 	},
-					"application" : {"value" : dataAsSerialized, "type": "String"},
 					"fullName" : {"value" : appdata.fullName, "type": "String"},
  					"dateOfBirth" : {"value" : appdata.dateOfBirth, "type": "Date"},
+ 					"age": {"value" : appdata.age, "type": "Long"},
  					"gender" : {"value" : appdata.gender, "type": "String"},
-					"nationality" : {"value" : appdata.nationality, "type": "String"},
-					"countryOfBirth" : {"value" : appdata.countryOfBirth, "type": "String"},
-					"passportNumber": {"value" : appdata.passportNumber, "type": "String"},
-					"travelPurpose": {"value" : appdata.travelPurpose, "type": "String"},
-					"costOfStay": {"value" : appdata.costOfStay, "type": "String"},	
-					"period": {"value" : appdata.period, "type": "String"},
-					"location": {"value" : appdata.location, "type": "String"},
-					"occupation": {"value" : appdata.occupation, "type": "String"},
-					"travelEU": {"value" : appdata.travelEU, "type": "String"},
-					"Category_of_travellers" : {"value" : "", "type": "String"},
-					"age": {"value" : appdata.age, "type": "Long"},
-					"applicant": {"value" : appdata.userId, "type": "String"},
+ 					"applicant": {"value" : appdata.userId, "type": "String"},
+					"appTypeName": {"value" : appdata.appTypeName, "type": "String"},
 					"appId": {"value" : appdata.appId, "type": "String"},
 					"status": {"value": "Open", "type":"String"},
 					 "bevoegd" : {"value" : true, "type": "Boolean"}
  				},
  				"businessKey" : appdata.appId
-        	}
+ 			};
+      if (appdata.appTypeName == "Travel document") {
+      		jsonProcessVariables.variables["travelDoc"] = 
+      			{"value" : appdata.travelDoc, "type": "String"};
+      		jsonProcessVariables.variables["maritalStatus"] = 
+      			{"value": appdata.maritalStatus, "type": "String"};
+      		jsonProcessVariables.variables["passportNumber"] = {"value" : appdata.passportNumber, "type": "String"};
+      		jsonProcessVariables.variables["location"] = {"value" : appdata.location, "type": "String"};
+      		jsonProcessVariables.variables["bsnNumber"] = {"value" : appdata.bsnNumber, "type": "String"};
+      } else if (appdata.appTypeName == "Legalization") {
+      		jsonProcessVariables.variables["legalDoc"] = {"value" : appdata.legalDoc, "type": "String"};
+      } else {
+      		jsonProcessVariables.variables["nationality"] = {"value" : appdata.nationality, "type": "String"};
+      		jsonProcessVariables.variables["countryOfBirth"] = {"value" : appdata.countryOfBirth, "type": "String"};
+      		jsonProcessVariables.variables["travelPurpose"] = {"value" : appdata.travelPurpose, "type": "String"};
+      		jsonProcessVariables.variables["costOfStay"] = {"value" : appdata.costOfStay, "type": "String"};
+      		jsonProcessVariables.variables["period"] = {"value" : appdata.period, "type": "String"};
+      		jsonProcessVariables.variables["location"] = {"value" : appdata.location, "type": "String"};
+      		jsonProcessVariables.variables["occupation"] = {"value" : appdata.occupation, "type": "String"};      		
+      		jsonProcessVariables.variables["travelEU"] = {"value" : appdata.travelEU, "type": "String"};      		
+      		jsonProcessVariables.variables["Category_of_travellers"] = {"value" : "", "type": "String"};
+       		jsonProcessVariables.variables["age"] = {"value" : appdata.age, "type": "Long"};
+      }
+      //console.log("photofile", appdata.photofile);
+      //synchronous
+      //console.log("jsonProcessVariables", jsonProcessVariables);
+      var options = {
+        headers: {'Content-Type': 'application/json'},
+        data: jsonProcessVariables
       };
 
       var result = HTTP.post(url, options);

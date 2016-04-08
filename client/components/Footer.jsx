@@ -7,14 +7,6 @@ var {
     ToolbarTitle,
     ToolbarSeparator,
     Styles,
-    FontIcon,
-    RaisedButton,
-    FlatButton,
-    IconButton,
-    IconMenu,
-    MoreVertIcon,
-    MenuItem,
-    DatePicker
 } = MUI;
 
 const {
@@ -55,8 +47,7 @@ Footer = React.createClass({
     return (
  <Toolbar>
     <ToolbarGroup float="left">
-          <ToolbarTitle text="PoC DCV - Q1 2016 - demonstratie Process Redesign consulaire transacties" />
-      <ToolbarSeparator />
+          <ToolbarTitle text="Proof of Concept DCV - demonstratie Business Process Redesign" />
     </ToolbarGroup>
   </Toolbar>
     );

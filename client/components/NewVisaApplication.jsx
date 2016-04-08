@@ -5,13 +5,11 @@ const {
     AppCanvas,
     Card,
     CardHeader,
-    FlatButton,
+    CardText,
+    CardActions,
+    RaisedButton,
     MenuItem,
-    List,
-    ListItem,
     TextField,
-    Divider,
-    Paper,
     SelectField,
     DatePicker
     } = MUI;
@@ -25,7 +23,7 @@ const style = {
   marginLeft: 20,
 };
 
-NewApplication = React.createClass({
+NewVisaApplication = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -108,8 +106,8 @@ NewApplication = React.createClass({
       Meteor.call("insertMessage", {
         applicant: Meteor.userId(),
         datetime: new Date(),
-        subject: "New Application",
-        content: "Submitted New Application!"
+        subject: "New Application for " + this.state.appType.name,
+        content: "New Application, go Pay and then Submit"
       });
       console.log("Data", data);
       Applications.insert({
@@ -123,6 +121,7 @@ NewApplication = React.createClass({
         travelPurpose: data.travelPurpose,
         travelEU: data.travelEU,
         status: "Open",
+        appTypeName: this.state.appType.name,
         createdAt: new Date(),            // current time
         applicant: Meteor.userId(),           // _id of logged in user
       });
@@ -142,7 +141,7 @@ NewApplication = React.createClass({
           subtitle={this.state.appType.name}
           avatar={this.state.appType.image}
         />
-        </Card>
+       
 
         <TextField
           ref="passportNumber"
@@ -227,16 +226,20 @@ NewApplication = React.createClass({
             <MenuItem value={"RAB"} primaryText="Rabat"/>
         </SelectField>
 
-        <FileUpload uploadtype="photo"/>
-        <Divider />
-        <FileUpload uploadtype="passportscan"/>
-        <Scan/>
-        <Divider />
-        <FlatButton
+        <CardText>
+          <FileUpload uploadtype="photo"/>
+          
+          <FileUpload uploadtype="passportscan"/>
+          <Scan />
+        </CardText>
+        <CardActions>
+        <RaisedButton primary={true}
           type="submit"
           label="Submit"
           onClick={this.handleSubmit}
         />
+        </CardActions>
+         </Card>
     </AppCanvas>
    );
   }

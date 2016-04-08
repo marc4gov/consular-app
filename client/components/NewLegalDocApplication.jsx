@@ -9,7 +9,11 @@ const {
     CardActions,
     RaisedButton,
     MenuItem,
+    List,
+    ListItem,
     TextField,
+    Divider,
+    Paper,
     SelectField,
     DatePicker
     } = MUI;
@@ -23,7 +27,7 @@ const style = {
   marginLeft: 20,
 };
 
-NewTravelDocApplication = React.createClass({
+NewLegalDocApplication = React.createClass({
 
   // This mixin makes the getMeteorData method work
   mixins: [ReactMeteorData],
@@ -43,9 +47,7 @@ NewTravelDocApplication = React.createClass({
     return {
       myself: Meteor.user(),
       gender: "Male",
-      maritalStatus: "Married",
-      travelDoc: "Paspoort",
-      location: "ACC",
+      legalDoc: "Birth Certificate",
       appType: appType
     };
   },
@@ -53,12 +55,12 @@ NewTravelDocApplication = React.createClass({
   handleGenderChange: function(event, index, value) {
     this.setState({gender: value});
   },  
-  handleMaritalChange: function(event, index, value) {
-    this.setState({maritalStatus: value});
+  handleLegalDocChange: function(event, index, value) {
+    this.setState({legalDoc: value});
+  },
+  handleOccupationChange: function(event, index, value) {
+    this.setState({occupation: value});
   },  
-  handleTravelDocChange: function(event, index, value) {
-    this.setState({travelDoc: value});
-  }, 
   handleLocationChange: function(event, index, value) {
     this.setState({location: value});
   },
@@ -73,12 +75,9 @@ NewTravelDocApplication = React.createClass({
   getFormData: function() {
     var data = {
       passportNumber: this.refs.passportNumber.getValue(),
-      bsnNumber: this.refs.bsnNumber.getValue(),
-      maritalStatus: this.state.maritalStatus,
-      travelDoc: this.state.travelDoc,
+      legalDoc: this.state.legalDoc,
       dateOfBirth: this.refs.dateOfBirth.getDate(),
       gender: this.state.gender,
-      location: this.state.location
     }
     return data
   },
@@ -94,16 +93,13 @@ NewTravelDocApplication = React.createClass({
       console.log("Data", data);
       Applications.insert({
         passportNumber: data.passportNumber,
-        bsnNumber: data.bsnNumber,
         dateOfBirth: data.dateOfBirth,
         gender: data.gender,
-        maritalStatus: data.maritalStatus,
-        travelDoc: data.travelDoc,
-        location: data.location,
+        legalDoc: data.legalDoc,
         status: "Open",
-        applicant: Meteor.userId(),           // _id of logged in user
         appTypeName: this.state.appType.name,
-        createdAt: new Date() // current time
+        createdAt: new Date(),            // current time
+        applicant: Meteor.userId(),           // _id of logged in user
       });
       FlowRouter.go('/applications')
   },
@@ -120,18 +116,13 @@ NewTravelDocApplication = React.createClass({
           subtitle={this.state.appType.name}
           avatar={this.state.appType.image}
         />
-
+        
 
         <TextField
           ref="passportNumber"
           floatingLabelText="Passport Number"
           style={style}
           value="1234ABC56" />
-        <TextField
-          ref="bsnNumber"
-          floatingLabelText="BSN Number"
-          style={style}
-          value="188830000" />
         <DatePicker 
           ref="dateOfBirth"
           floatingLabelText="Date of Birth"
@@ -146,27 +137,15 @@ NewTravelDocApplication = React.createClass({
             <MenuItem value={"Female"} primaryText="Female"/>
         </SelectField>
         <SelectField
-          ref="maritalStatus"
-          floatingLabelText="Marital Status"
+          ref="legalDoc"
+          floatingLabelText="Legal Doc Type"
           style={style}
-          value={this.state.maritalStatus} onChange={this.handleMaritalChange}>
-            <MenuItem value={"Married"} primaryText="Married"/>
-            <MenuItem value={"Divorced"} primaryText="Divorced"/>
-            <MenuItem value={"Single"} primaryText="Single"/>
+          value={this.state.legalDoc} onChange={this.handleLegalDocChange}>
+            <MenuItem value={"Birth Certificate"} primaryText="Birth Certificate"/>
+            <MenuItem value={"Proof of Marriage"} primaryText="Proof of Marriage"/>
+            <MenuItem value={"Driving license"} primaryText="Driving license"/>
+            <MenuItem value={"School Certificate"} primaryText="School Certificate"/>
         </SelectField>
-        <SelectField
-          ref="travelDoc"
-          floatingLabelText="Travel Doc Type"
-          style={style}
-          value={this.state.travelDoc} onChange={this.handleTravelDocChange}>
-            <MenuItem value={"Paspoort"} primaryText="Paspoort"/>
-            <MenuItem value={"Tweede Paspoort"} primaryText="Tweede Paspoort"/>
-            <MenuItem value={"Zakenpaspoort"} primaryText="Zakenpaspoort"/>
-            <MenuItem value={"ID kaart"} primaryText="ID kaart"/>
-            <MenuItem value={"Noodpaspoort"} primaryText="Noodpaspoort"/>
-            <MenuItem value={"Laissez-passer"} primaryText="Laissez-passer"/>
-        </SelectField>
-
         <CardText>
           <FileUpload uploadtype="photo"/>
           

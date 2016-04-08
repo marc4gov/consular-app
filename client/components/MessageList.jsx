@@ -11,7 +11,7 @@ MessageList = React.createClass({
   render() {
     return (
       <div>
-          <h4>Messages</h4>
+          <b>Messages</b>
 
           {this.renderMessages()}
 
